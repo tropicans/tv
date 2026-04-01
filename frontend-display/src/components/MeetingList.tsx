@@ -96,7 +96,7 @@ const MeetingList: React.FC<Props> = ({ meetings: rawMeetings }) => {
       <div className="flex items-center justify-between border-b border-indigo-900/10 pb-6 shrink-0">
         <h3 className="font-headline text-2xl font-extrabold text-slate-900 flex items-center gap-3">
           <span className="material-symbols-outlined text-3xl">calendar_month</span>
-          Agenda Bulan Ini
+          Agenda {new Date().toLocaleDateString('id-ID', { month: 'long', year: 'numeric' })}
         </h3>
         <span className="font-label text-xs font-black text-slate-800 bg-white/60 px-3 py-1 rounded-full uppercase tracking-widest">
           {meetings.length} Kegiatan

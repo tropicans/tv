@@ -43,7 +43,7 @@ const PrayerTimes: React.FC<Props> = ({ prayerTime }) => {
       <div className="flex flex-col pr-4 border-r border-outline-variant/30 shrink-0 justify-center">
         <div className="flex items-center gap-2 mb-1">
           <span className="material-symbols-outlined text-primary text-xl">mosque</span>
-          <span className="font-label text-[11px] font-black text-on-surface uppercase tracking-[0.10em]">Waktu Sholat</span>
+          <span className="font-label text-[11px] font-black text-on-surface uppercase tracking-[0.10em]">Waktu Shalat</span>
         </div>
         <span className="text-[10px] text-outline font-bold tracking-widest">CILANDAK (UTC+7)</span>
       </div>
