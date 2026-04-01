@@ -134,8 +134,6 @@ const MeetingList: React.FC<Props> = ({ meetings: rawMeetings }) => {
                 <div className="flex justify-between items-start mb-3">
                   <div className={`flex items-center gap-2 font-label text-sm font-black px-3 py-1.5 rounded-lg leading-none ${isHighlighted ? 'text-blue-700 bg-blue-50' : 'text-slate-800 bg-white/50'}`}>
                     <span>{formatDate(meeting.startTime, meeting.endTime)}</span>
-                    <span className="opacity-40 font-normal">|</span>
-                    <span>{formatTime(meeting.startTime)} WIB</span>
                   </div>
                   <div className="flex items-center gap-2">
                     {meeting.status !== "confirmed" && (
