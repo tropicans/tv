@@ -1,0 +1,60 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: corporate-tv-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Satepad@ng
+      POSTGRES_DB: corporate_tv
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "6000:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - corporate-tv
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: corporate-tv-backend
+    environment:
+      DATABASE_URL: postgresql://postgres:Satepad%40ng@postgres:5432/corporate_tv?schema=public
+      PORT: 6001
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "6001:6001"
+    networks:
+      - corporate-tv
+
+  frontend-display:
+    build:
+      context: ./frontend-display
+      dockerfile: Dockerfile
+      args:
+        REACT_APP_API_URL: /api
+    container_name: corporate-tv-display
+    ports:
+      - "6002:80"
+    depends_on:
+      - backend
+    networks:
+      - corporate-tv
+
+
+
+volumes:
+  pgdata:
+
+networks:
+  corporate-tv:
+    driver: bridge

@@ -1,0 +1,39 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+
+model Meeting {
+  id           String    @id @default(uuid())
+  title        String
+  location     String
+  locationType String    @default("physical") // physical, virtual
+  startTime    DateTime
+  endTime      DateTime?
+  status       String    @default("confirmed") // confirmed, pending, in_progress, cancelled
+  attendees    Int       @default(0)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+}
+
+
+model PrayerTime {
+  id      String   @id @default(uuid())
+  date    DateTime @db.Date
+  subuh   String
+  dzuhur  String
+  ashar   String
+  maghrib String
+  isya    String
+  city    String   @default("Jakarta")
+
+  @@unique([date, city])
+}
+

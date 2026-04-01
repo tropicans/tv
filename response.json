@@ -1,0 +1,150 @@
+{
+  "featured": {
+    "id": "553619d4-5c0d-438c-9d31-b2d9edce6c9a",
+    "title": "Annual Strategy Summit",
+    "description": "Bergabunglah dengan tim kepemimpinan global kami untuk penyelarasan visi 2025. Auditorium Utama pukul 09:00 WIB.",
+    "icon": "event_upcoming",
+    "status": "live",
+    "isFeatured": true,
+    "imageUrl": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwWVxaf8fAdGkmTTVh9NLglgmxJCH2sliShb4Uyhl48qmXVmW4-Q_aqH51XbPHdDOMDel6dQddAUHedX3tgemRRAlhT2XmICrV5VaUjP4WFkwQSNGHqxoUEnftf9c3OUR7Dh7xjdr4Wq52XmaX8wOUsNDEhmtCeJomRzS4CAdqGx-DZWnGoFfwwIx3HMJYfsgmcndygzOozZUJhAe0j0TdcJ6XrKVms5hMTxhNDZjbYvqrjjfJsq1mhScaIc0t9psL_tMWWdspEYu0",
+    "scheduledAt": null,
+    "expiresAt": null,
+    "createdAt": "2026-03-31T02:11:17.106Z",
+    "updatedAt": "2026-03-31T02:11:17.106Z"
+  },
+  "announcements": [
+    {
+      "id": "23e66e05-c5b3-4fe8-96ca-d43182ab5985",
+      "title": "Fire Drill Notice - Block A",
+      "description": "Scheduled fire drill for Block A building.",
+      "icon": "emergency",
+      "status": "scheduled",
+      "isFeatured": false,
+      "imageUrl": null,
+      "scheduledAt": "2026-03-28T10:00:00Z",
+      "expiresAt": null,
+      "createdAt": "2026-03-31T02:11:17.106Z",
+      "updatedAt": "2026-03-31T02:11:17.106Z"
+    },
+    {
+      "id": "f8f09a11-5173-4278-aa32-f0eeb59d410f",
+      "title": "Weekly Cafeteria Menu",
+      "description": "Updated weekly cafeteria menu for all employees.",
+      "icon": "restaurant",
+      "status": "live",
+      "isFeatured": false,
+      "imageUrl": null,
+      "scheduledAt": null,
+      "expiresAt": null,
+      "createdAt": "2026-03-31T02:11:17.106Z",
+      "updatedAt": "2026-03-31T02:11:17.106Z"
+    },
+    {
+      "id": "5dfc6e02-3a83-4075-a7f1-8b1da9919628",
+      "title": "Employee of the Month: Sarah J.",
+      "description": "Congratulations to Sarah J. for outstanding performance.",
+      "icon": "celebration",
+      "status": "live",
+      "isFeatured": false,
+      "imageUrl": null,
+      "scheduledAt": null,
+      "expiresAt": "2026-03-29T23:59:59Z",
+      "createdAt": "2026-03-31T02:11:17.106Z",
+      "updatedAt": "2026-03-31T02:11:17.106Z"
+    }
+  ],
+  "meetings": [
+    {
+      "id": "5ce3a20c-9106-40cf-b21c-80ae030d795e",
+      "title": "Rapat Koordinasi (KEMENTERIAN PERUMAHAN DAN KAWASAN PERMUKIMAN (Non-Kemensetneg))",
+      "location": "Ruang Kelas 5",
+      "locationType": "physical",
+      "startTime": "2026-03-02T01:00:00Z",
+      "endTime": "2026-03-02T13:00:00Z",
+      "status": "confirmed",
+      "attendees": 35,
+      "createdAt": "2026-03-31T04:12:15.13Z",
+      "updatedAt": "2026-03-31T04:12:15.13Z"
+    },
+    {
+      "id": "a8924b91-5e9e-43f5-a002-a26a1441f143",
+      "title": "Webbinar AI Seri 2 - Settingan Shooting - PPKASN (Kemensetneg)",
+      "location": "Ruang Studio",
+      "locationType": "physical",
+      "startTime": "2026-03-04T01:00:00Z",
+      "endTime": "2026-03-04T05:00:00Z",
+      "status": "confirmed",
+      "attendees": 10,
+      "createdAt": "2026-03-31T04:12:15.143Z",
+      "updatedAt": "2026-03-31T04:12:15.143Z"
+    },
+    {
+      "id": "ddd1e74b-3b71-4401-bace-663b52976242",
+      "title": "Diskusi Implementasi POJK Nomor 20 tahun 2023 dan POJK nomor 11 tahun 2025 untuk KPR FLPP - KEMENTER",
+      "location": "Ruang Kelas 5",
+      "locationType": "physical",
+      "startTime": "2026-03-09T01:00:00Z",
+      "endTime": "2026-03-09T13:00:00Z",
+      "status": "confirmed",
+      "attendees": 35,
+      "createdAt": "2026-03-31T04:12:15.136Z",
+      "updatedAt": "2026-03-31T04:12:15.136Z"
+    },
+    {
+      "id": "d9ebcd56-3ea0-4228-bc6d-7d6c42dbb781",
+      "title": "Diskusi Implementasi POJK Nomor 20 tahun 2023 dan POJK nomor 11 tahun 2025 untuk KPR FLPP - KEMENTER",
+      "location": "Ruang Kelas 5",
+      "locationType": "physical",
+      "startTime": "2026-03-10T01:00:00Z",
+      "endTime": "2026-03-10T13:00:00Z",
+      "status": "confirmed",
+      "attendees": 35,
+      "createdAt": "2026-03-31T04:12:15.14Z",
+      "updatedAt": "2026-03-31T04:12:15.14Z"
+    }
+  ],
+  "kpis": [
+    {
+      "id": "4e59ee17-b388-48f8-afa9-8d8116437e38",
+      "label": "Tugas Selesai",
+      "value": "128",
+      "icon": "task_alt",
+      "trend": "+12%",
+      "trendType": "positive",
+      "sortOrder": 0
+    },
+    {
+      "id": "60e439f7-57c4-42d0-b983-ea7cb65f0837",
+      "label": "Proyek Aktif",
+      "value": "42",
+      "icon": "rocket_launch",
+      "trend": "/50",
+      "trendType": "neutral",
+      "sortOrder": 1
+    },
+    {
+      "id": "6e4b438d-0a1d-4cb8-b8c3-5b7998bd5a8f",
+      "label": "Sentimen Tim",
+      "value": "94%",
+      "icon": "sentiment_satisfied",
+      "trend": "Stabil",
+      "trendType": "positive",
+      "sortOrder": 2
+    }
+  ],
+  "prayerTime": {
+    "subuh": "04:46",
+    "dzuhur": "11:57",
+    "ashar": "15:12",
+    "maghrib": "17:58",
+    "isya": "19:04",
+    "city": "Cilandak Barat, Jakarta Selatan"
+  },
+  "settings": {
+    "id": "c41c6262-b5ee-4679-aaae-f049e5136025",
+    "brandColor": "#8EC5E8",
+    "activeLayout": "bento",
+    "weatherCity": "Jakarta",
+    "timezone": "Asia/Jakarta"
+  }
+}
