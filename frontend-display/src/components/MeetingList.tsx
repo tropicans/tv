@@ -69,7 +69,23 @@ const AVATAR_URLS = [
   "https://lh3.googleusercontent.com/aida-public/AB6AXuDkslp5hA-Fh73Vvv81C9fSVItQ0Yw9hDFUuHxYz-yOsfmFGzr_RGMJMx_foKAb9rF7xrXOwT7z7bXo1iRvhPVkTLVcqdp4ym1j-YD6jbBEXE_Upb0MrH2SmvYQEa0BeWsfXqwXi3muHO5V1JP8tBo9LMIys_6aSuq4JCSxZYeW3SXPE_NsNSrvdCh0OBkQwXwd1krasyXd1OurKp-HY6l5O-TNZdsuF03s1oIISQHQI9271TnmsaW3o8ToUbrSmJKToCPTYCnB4DYv",
 ];
 
-const MeetingList: React.FC<Props> = ({ meetings }) => {
+const MeetingList: React.FC<Props> = ({ meetings: rawMeetings }) => {
+  // Group duplicate meetings with same title and exact same time
+  const groupedMap = new Map<string, Meeting>();
+  for (const m of rawMeetings) {
+    // We use title and startTime to group. 
+    const key = `${m.title.trim()}-${new Date(m.startTime).getTime()}`;
+    if (groupedMap.has(key)) {
+      const existing = groupedMap.get(key)!;
+      if (!existing.location.includes(m.location)) {
+        existing.location = `${existing.location}, ${m.location}`;
+      }
+    } else {
+      groupedMap.set(key, { ...m });
+    }
+  }
+  const meetings = Array.from(groupedMap.values());
+
   const needsScroll = meetings.length > 2;
   
   // Jika butuh scroll, kita duplikat listnya untuk efek scroll yang mulus (infinite marquee)
@@ -161,11 +177,11 @@ const MeetingList: React.FC<Props> = ({ meetings }) => {
                     </div>
                   );
                 })()}
-                <div className={`flex items-center gap-2 font-medium ${isHighlighted ? 'text-slate-500' : 'text-slate-700'}`}>
+                <div className={`inline-flex items-center gap-2 font-label text-sm font-black px-3 py-1.5 rounded-lg leading-none ${isHighlighted ? 'text-blue-700 bg-blue-50' : 'text-slate-800 bg-white/50'}`}>
                   <span className="material-symbols-outlined text-base">
                     {getLocationIcon(meeting.locationType)}
                   </span>
-                  <span className="text-sm">{meeting.location}</span>
+                  <span>{meeting.location}</span>
                 </div>
               </div>
             );
