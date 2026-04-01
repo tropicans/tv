@@ -5,3 +5,9 @@ export async function fetchDisplayData() {
   if (!res.ok) throw new Error("Failed to fetch display data");
   return res.json();
 }
+
+export async function fetchServerTime() {
+  const res = await fetch(`${API_BASE}/health`);
+  if (!res.ok) throw new Error("Failed to fetch server time");
+  return res.json();
+}
