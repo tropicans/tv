@@ -1,4 +1,5 @@
 import React from "react";
+import { AlertTriangle, CarFront } from "lucide-react";
 import { useBMKG } from "../hooks/useBMKG";
 import { useTraffic } from "../hooks/useTraffic";
 
@@ -8,8 +9,8 @@ export const AnnouncementTicker = () => {
 
   // Gabungkan hasil fetch dari masing-masing API
   const displayTexts = [
-    bmkgLoading ? "Mengambil update BMKG terbaru..." : bmkgText,
-    trafficLoading ? "Mengambil data pantauan lalu lintas..." : trafficText,
+    { text: bmkgLoading ? "Mengambil update BMKG terbaru..." : bmkgText, icon: AlertTriangle, color: "text-red-600" },
+    { text: trafficLoading ? "Mengambil data pantauan lalu lintas..." : trafficText, icon: CarFront, color: "text-blue-700" },
   ];
 
   return (
@@ -20,12 +21,18 @@ export const AnnouncementTicker = () => {
       
       <div className="flex-grow overflow-hidden relative h-full flex items-center">
         <div className="whitespace-nowrap animate-marquee flex items-center gap-20 text-slate-900 font-body text-base font-bold tracking-wide h-full pl-[100vw] will-change-transform">
-          {displayTexts.map((text, i) => (
-            <span key={i} className="flex items-center gap-4">
-              <span className="w-2 h-2 rounded-full bg-slate-800"></span>
-              {text}
-            </span>
-          ))}
+          {displayTexts.map((item, i) => {
+            const Icon = item.icon;
+            return (
+              <span key={i} className="flex items-center gap-4">
+                <span className="w-2 h-2 rounded-full bg-slate-800"></span>
+                <span className="flex items-center gap-2">
+                  <Icon className={`w-5 h-5 ${item.color}`} />
+                  {item.text}
+                </span>
+              </span>
+            );
+          })}
         </div>
       </div>
 

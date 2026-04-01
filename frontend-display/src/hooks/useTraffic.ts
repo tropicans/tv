@@ -20,9 +20,9 @@ export const useTraffic = () => {
         if (!TOMTOM_API_KEY) {
           // Fallback ke Mockup Data jika API Key belum diisi
           const mocks = [
-            "🚗 PANTUAN LALIN: Arus lalu lintas sekitar Bundaran HI terpantau padat merayap (Kecepatan rata-rata 18 km/jam).",
-            "🚗 PANTUAN LALIN: Jl. MH Thamrin arah Monas terpantau ramai lancar di kedua arah.",
-            "🚗 PANTUAN LALIN: Sudirman arah Blok M mengalami perlambatan akibat volume kendaraan."
+            "PANTUAN LALIN: Arus lalu lintas sekitar Bundaran HI terpantau padat merayap (Kecepatan rata-rata 18 km/jam).",
+            "PANTUAN LALIN: Jl. MH Thamrin arah Monas terpantau ramai lancar di kedua arah.",
+            "PANTUAN LALIN: Sudirman arah Blok M mengalami perlambatan akibat volume kendaraan."
           ];
           // Ganti teks acak untuk menimbulkan efek dinamis
           setTrafficText(mocks[Math.floor(Math.random() * mocks.length)]);
@@ -50,14 +50,14 @@ export const useTraffic = () => {
           status = "Padat Merayap";
         }
 
-        const formatted = `🚗 PANTUAN LALIN PUSAT (Bundaran HI): Arus kendaraan terpantau ${status} dengan kecepatan rata-rata ${currentSpeed} km/jam.`;
+        const formatted = `PANTUAN LALIN PUSAT (Bundaran HI): Arus kendaraan terpantau ${status} dengan kecepatan rata-rata ${currentSpeed} km/jam.`;
         
         setTrafficText(formatted);
         setError(null);
       } catch (err) {
         console.error("Traffic Fetch Error:", err);
         setError(err instanceof Error ? err.message : "Terjadi kesalahan saat memuat data Lalu Lintas");
-        setTrafficText("🚗 PANTUAN LALIN: Informasi lalu lintas sementara tidak dapat diakses.");
+        setTrafficText("PANTUAN LALIN: Informasi lalu lintas sementara tidak dapat diakses.");
       } finally {
         setLoading(false);
       }

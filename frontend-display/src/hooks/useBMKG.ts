@@ -29,8 +29,8 @@ export const useBMKG = () => {
         const wilayah = q("Wilayah");
         const potensi = q("Potensi");
 
-        // Format: "⚠️ INFO GEMPA BMKG: Mag 5.1, 31 Mar 2026 11:55:21 WIB. Lokasi: 120 km Tenggara ..., Kedalaman 10 km. Tidak berpotensi tsunami."
-        const formattedText = `⚠️ INFO GEMPA BMKG: Mag ${mag}, ${tanggal} ${jam}. Lokasi: ${wilayah}, Kedalaman ${kedalaman}. ${potensi}.`;
+        // Format: "INFO GEMPA BMKG: Mag 5.1, 31 Mar 2026 11:55:21 WIB. Lokasi: 120 km Tenggara ..., Kedalaman 10 km. Tidak berpotensi tsunami."
+        const formattedText = `INFO GEMPA BMKG: Mag ${mag}, ${tanggal} ${jam}. Lokasi: ${wilayah}, Kedalaman ${kedalaman}. ${potensi}.`;
 
         setBmkgText(formattedText);
         setError(null);
@@ -38,7 +38,7 @@ export const useBMKG = () => {
         console.error("BMKG Fetch Error:", err);
         setError(err instanceof Error ? err.message : "Terjadi kesalahan saat memuat data BMKG");
         // Fallback text if fetch fails (e.g. CORS issues occasionally)
-        setBmkgText("🌤️ INFO Cuaca BMKG: Prakiraan cuaca wilayah Jabodetabek hari ini cerah dengan potensi berawan.");
+        setBmkgText("INFO Cuaca BMKG: Prakiraan cuaca wilayah Jabodetabek hari ini cerah dengan potensi berawan.");
       } finally {
         setLoading(false);
       }
