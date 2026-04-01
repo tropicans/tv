@@ -177,11 +177,15 @@ const MeetingList: React.FC<Props> = ({ meetings: rawMeetings }) => {
                     </div>
                   );
                 })()}
-                <div className={`inline-flex items-center gap-2 font-label text-sm font-black px-3 py-1.5 rounded-lg leading-none ${isHighlighted ? 'text-blue-700 bg-blue-50' : 'text-slate-800 bg-white/50'}`}>
-                  <span className="material-symbols-outlined text-base">
-                    {getLocationIcon(meeting.locationType)}
-                  </span>
-                  <span>{meeting.location}</span>
+                <div className="flex flex-wrap gap-2">
+                  {meeting.location.split(', ').map((loc, i) => (
+                    <div key={i} className={`inline-flex items-center gap-2 font-label text-sm font-black px-3 py-1.5 rounded-lg leading-none ${isHighlighted ? 'text-blue-700 bg-blue-50' : 'text-slate-800 bg-white/50'}`}>
+                      <span className="material-symbols-outlined text-base">
+                        {getLocationIcon(meeting.locationType)}
+                      </span>
+                      <span>{loc}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
             );
