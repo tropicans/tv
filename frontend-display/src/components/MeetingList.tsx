@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useRef } from "react";
+import { useAnimationFrame } from "framer-motion";
 import { Meeting } from "../types";
 
 interface Props {
@@ -64,16 +65,19 @@ function getLocationIcon(locationType: string): string {
   return locationType === "virtual" ? "videocam" : "location_on";
 }
 
-const AVATAR_URLS = [
-  "https://lh3.googleusercontent.com/aida-public/AB6AXuAe4NVy1auhNSjQ2AcpI2nIfEX1JX0PcGC-ru27m42nBZl_anH25ODRxRWCnchn0YHMsCBp7tf_NPLlywIamx48hjoTAeoqr_LVq1_98xIg7pRvT2Ge8SzKF-1YtrtphBS1MgYeRQMcJqRqaOjQVISvZ5-yejucGgj_YimdUBq76dMow7H-G7qw_L86lSQcER_hNHv-K72qLd4CYFTufVX5VgRuAsA6bRZ9h6X06F_igXphWMo3yKN_JCDVkHVeiCXzHWa7HVRfVQFd",
-  "https://lh3.googleusercontent.com/aida-public/AB6AXuDkslp5hA-Fh73Vvv81C9fSVItQ0Yw9hDFUuHxYz-yOsfmFGzr_RGMJMx_foKAb9rF7xrXOwT7z7bXo1iRvhPVkTLVcqdp4ym1j-YD6jbBEXE_Upb0MrH2SmvYQEa0BeWsfXqwXi3muHO5V1JP8tBo9LMIys_6aSuq4JCSxZYeW3SXPE_NsNSrvdCh0OBkQwXwd1krasyXd1OurKp-HY6l5O-TNZdsuF03s1oIISQHQI9271TnmsaW3o8ToUbrSmJKToCPTYCnB4DYv",
-];
-
 const MeetingList: React.FC<Props> = ({ meetings: rawMeetings }) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const yPos = useRef(0);
+  const pauseTime = useRef(0);
+  const pausedIndices = useRef<Set<number>>(new Set());
+
+  // Urutkan jadwal secara kronologis tanpa memfilternya (tetap agenda sebulan)
+  const sortedMeetings = [...rawMeetings].sort((a, b) => new Date(a.startTime).getTime() - new Date(b.startTime).getTime());
+  
   // Group duplicate meetings with same title and exact same time
   const groupedMap = new Map<string, Meeting>();
-  for (const m of rawMeetings) {
-    // We use title and startTime to group. 
+  for (const m of sortedMeetings) {
     const key = `${m.title.trim()}-${new Date(m.startTime).getTime()}`;
     if (groupedMap.has(key)) {
       const existing = groupedMap.get(key)!;
@@ -87,9 +91,70 @@ const MeetingList: React.FC<Props> = ({ meetings: rawMeetings }) => {
   const meetings = Array.from(groupedMap.values());
 
   const needsScroll = meetings.length > 2;
-  
-  // Jika butuh scroll, kita duplikat listnya untuk efek scroll yang mulus (infinite marquee)
   const displayedMeetings = needsScroll ? [...meetings, ...meetings] : meetings;
+
+  const isToday = (dateIso: string) => {
+    const d = new Date(dateIso);
+    const today = new Date();
+    return d.getDate() === today.getDate() &&
+           d.getMonth() === today.getMonth() &&
+           d.getFullYear() === today.getFullYear();
+  };
+
+  const now = Date.now();
+  let nextUpcomingIndex = meetings.findIndex(m => {
+    const endTime = m.endTime ? new Date(m.endTime).getTime() : new Date(m.startTime).getTime() + 2 * 60 * 60 * 1000;
+    return endTime >= now;
+  });
+  if (nextUpcomingIndex === -1) nextUpcomingIndex = 0;
+
+  useAnimationFrame((time, delta) => {
+    if (!needsScroll || !containerRef.current || !contentRef.current) return;
+
+    if (pauseTime.current > 0) {
+      pauseTime.current -= delta;
+      return;
+    }
+
+    const containerHeight = containerRef.current.offsetHeight;
+    const contentHeight = contentRef.current.offsetHeight / 2;
+    const speed = 0.05; 
+
+    yPos.current -= speed * delta;
+
+    if (Math.abs(yPos.current) >= contentHeight) {
+      yPos.current = 0;
+      pausedIndices.current.clear();
+    }
+
+    contentRef.current.style.transform = `translateY(${yPos.current}px)`;
+
+    const highlightedElements = contentRef.current.querySelectorAll('.agenda-highlighted');
+    const currentVisualCenter = Math.abs(yPos.current) + (containerHeight / 2);
+
+    for (let i = 0; i < highlightedElements.length; i++) {
+      const target = highlightedElements[i] as HTMLElement;
+      const targetIndexAttr = target.getAttribute('data-index');
+      const targetIndex = targetIndexAttr ? parseInt(targetIndexAttr, 10) : i;
+
+      if (pausedIndices.current.has(targetIndex)) {
+        continue;
+      }
+
+      const targetCenterY = target.offsetTop + target.offsetHeight / 2;
+
+      // Cek jika titik tengah target sudah mencapai atau melewati titik tengah container
+      if (currentVisualCenter >= targetCenterY) {
+        pauseTime.current = 4000; // Pause 4 detik
+        pausedIndices.current.add(targetIndex);
+        
+        // Snap posisi presisi di tengah
+        yPos.current = -(targetCenterY - containerHeight / 2);
+        contentRef.current.style.transform = `translateY(${yPos.current}px)`;
+        break; // Hanya pause untuk satu item pada satu waktu
+      }
+    }
+  });
 
   return (
     <section className="col-span-7 row-span-6 bg-[#8EC5E8] rounded-[2rem] shadow-xl p-10 flex flex-col gap-6 border border-white/40 h-full overflow-hidden">
@@ -104,6 +169,7 @@ const MeetingList: React.FC<Props> = ({ meetings: rawMeetings }) => {
       </div>
       
       <div 
+        ref={containerRef}
         className="flex-1 flex flex-col overflow-hidden relative"
         style={{
           WebkitMaskImage: needsScroll ? 'linear-gradient(to bottom, transparent, black 10%, black 90%, transparent)' : 'none',
@@ -111,23 +177,22 @@ const MeetingList: React.FC<Props> = ({ meetings: rawMeetings }) => {
         }}
       >
         <div 
-          className={`flex flex-col gap-5 ${needsScroll ? 'animate-scroll-up' : ''}`}
-          style={{
-            animationDuration: needsScroll ? `${meetings.length * 6}s` : '0s'
-          }}
+          ref={contentRef}
+          className="flex flex-col gap-5"
         >
           {displayedMeetings.map((meeting, arrayIndex) => {
             const index = arrayIndex % meetings.length;
             const isActive = meeting.status === "in_progress";
-            // Highlight the first item or active item visually
-            const isHighlighted = isActive || index === 0;
+            // Highlight all meetings scheduled for today, or the closest upcoming meeting if there are none today
+            const isHighlighted = isActive || isToday(meeting.startTime) || index === nextUpcomingIndex;
 
             return (
               <div
                 key={`${meeting.id}-${arrayIndex}`}
+                data-index={arrayIndex}
                 className={`p-6 rounded-3xl transition-all duration-500 ease-in-out shrink-0 ${
                   isHighlighted 
-                    ? "bg-white text-slate-900 shadow-sm scale-[1.02]" 
+                    ? "bg-white text-slate-900 shadow-sm scale-[1.02] agenda-highlighted" 
                     : "bg-white/30 text-slate-900 border border-white/40"
                 }`}
               >

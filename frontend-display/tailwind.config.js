@@ -67,7 +67,7 @@ module.exports = {
         full: "9999px"
       },
       animation: {
-        marquee: "marquee 120s linear infinite",
+        marquee: "marquee 85s linear infinite",
         slowpan: "slowpan 30s ease-in-out infinite alternate",
         float: "float 6s ease-in-out infinite",
       },

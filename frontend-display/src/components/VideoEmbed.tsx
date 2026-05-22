@@ -7,7 +7,7 @@ const VideoEmbed: React.FC = () => {
         <iframe
           loading="lazy"
           className="w-full aspect-video border-none rounded-xl"
-          src="https://www.youtube.com/embed/dgFS_Vh7TYo?autoplay=1&loop=1&playlist=dgFS_Vh7TYo&controls=0&modestbranding=1"
+          src="https://www.youtube.com/embed/dgFS_Vh7TYo?autoplay=1&loop=1&playlist=dgFS_Vh7TYo&controls=0&modestbranding=1&mute=1"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
           title="YouTube Video"

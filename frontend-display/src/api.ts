@@ -11,3 +11,9 @@ export async function fetchServerTime() {
   if (!res.ok) throw new Error("Failed to fetch server time");
   return res.json();
 }
+
+export async function fetchTickerData() {
+  const res = await fetch(`${API_BASE}/display/ticker`);
+  if (!res.ok) throw new Error("Failed to fetch ticker data");
+  return res.json();
+}

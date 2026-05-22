@@ -47,4 +47,15 @@ router.get("/data", async (_req: Request, res: Response) => {
   });
 });
 
+router.get("/ticker", async (_req: Request, res: Response) => {
+  try {
+    const { getTickerData } = require("../services/ticker");
+    const tickerData = await getTickerData();
+    res.json(tickerData);
+  } catch (err) {
+    console.error("Error in /ticker route:", err);
+    res.status(500).json({ error: "Failed to load ticker data" });
+  }
+});
+
 export default router;

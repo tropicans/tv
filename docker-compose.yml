@@ -28,6 +28,8 @@ services:
     environment:
       DATABASE_URL: postgresql://postgres:Satepad%40ng@postgres:5432/corporate_tv?schema=public
       PORT: 6001
+      TOMTOM_API_KEY: ${TOMTOM_API_KEY:-}
+      TICKER_SHEETS_URL: ${TICKER_SHEETS_URL:-}
     depends_on:
       postgres:
         condition: service_healthy
