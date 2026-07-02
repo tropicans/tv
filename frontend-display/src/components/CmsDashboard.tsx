@@ -45,6 +45,29 @@ interface LeaveItem {
   monthText: string;
 }
 
+const formatIndonesianDateText = (dateString: string): string => {
+  if (!dateString) return "";
+  const parts = dateString.split("-"); // "YYYY-MM-DD"
+  if (parts.length !== 3) return "";
+  
+  const year = parseInt(parts[0], 10);
+  const month = parseInt(parts[1], 10) - 1; // 0-indexed
+  const day = parseInt(parts[2], 10);
+  
+  const dateObj = new Date(year, month, day);
+  if (isNaN(dateObj.getTime())) return "";
+
+  const dayName = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"][dateObj.getDay()];
+  const dayNum = day.toString().padStart(2, "0");
+  const months = [
+    "Januari", "Februari", "Maret", "April", "Mei", "Juni", 
+    "Juli", "Agustus", "September", "Oktober", "November", "Desember"
+  ];
+  const monthName = months[month];
+
+  return `${dayName}, ${dayNum} ${monthName} ${year}`;
+};
+
 export const CmsDashboard: React.FC = () => {
   // Authentication States
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -68,7 +91,6 @@ export const CmsDashboard: React.FC = () => {
   const [agendaTitle, setAgendaTitle] = useState("");
   const [agendaTime, setAgendaTime] = useState("");
   const [agendaLocation, setAgendaLocation] = useState("");
-  const [agendaDateText, setAgendaDateText] = useState("");
   const [agendaDateValue, setAgendaDateValue] = useState("");
 
   // Form States (Cuti)
@@ -231,24 +253,24 @@ export const CmsDashboard: React.FC = () => {
 
   const handleAddAgenda = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!agendaTitle || !agendaDateText || !agendaDateValue) {
-      showNotif("Judul, teks hari, dan tanggal kalender wajib diisi!", "error");
+    if (!agendaTitle || !agendaDateValue) {
+      showNotif("Judul dan tanggal kalender wajib diisi!", "error");
       return;
     }
 
     try {
+      const computedDateText = formatIndonesianDateText(agendaDateValue);
       await createAgendaEvent({
         title: agendaTitle,
         timeText: agendaTime,
         location: agendaLocation,
-        dateText: agendaDateText,
+        dateText: computedDateText,
         date: agendaDateValue
       });
       showNotif("Agenda baru berhasil ditambahkan!");
       setAgendaTitle("");
       setAgendaTime("");
       setAgendaLocation("");
-      setAgendaDateText("");
       setAgendaDateValue("");
       loadAgendaData();
     } catch (e: any) {
@@ -629,19 +651,7 @@ export const CmsDashboard: React.FC = () => {
                     />
                   </div>
 
-                  <div className="flex flex-col gap-1.5">
-                    <label className="font-label text-[10px] font-black text-slate-500 uppercase tracking-widest">
-                      Teks Hari (Judul Kolom di TV)
-                    </label>
-                    <input
-                      type="text"
-                      value={agendaDateText}
-                      onChange={(e) => setAgendaDateText(e.target.value)}
-                      placeholder="Contoh: Senin, 06 Juli 2026"
-                      className="px-4 py-2.5 bg-white/80 border border-slate-200 rounded-xl font-body text-sm text-slate-800 focus:outline-none focus:border-primary/50 focus:bg-white"
-                      required
-                    />
-                  </div>
+
 
                   <div className="flex flex-col gap-1.5">
                     <label className="font-label text-[10px] font-black text-slate-500 uppercase tracking-widest">
