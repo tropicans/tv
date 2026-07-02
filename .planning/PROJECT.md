@@ -10,6 +10,15 @@ Continuous, reliable, and highly legible information broadcast on TV displays ac
 - **Shipped Version**: v3.0 (CMS Single Source of Truth) - ✅ SHIPPED 2026-07-02
 - **Summary**: Disables Google Slides scraper and shifts scheduling responsibility entirely to a secure CMS Admin Portal. Adds real-time database stats, Jakarta local-time date filtering for passed leave records, Google OAuth-only authentication, and renamed CMS branding to "Agenda CMS".
 
+## Current Milestone: v4.0 Mobile Responsiveness
+
+**Goal:** Menjadikan Agenda Dashboard dan CMS Admin Portal responsif serta mudah digunakan di perangkat smartphone.
+
+**Target features:**
+- Halaman Display Utama/Agenda responsif dengan menyembunyikan widget sekunder (Video & Cuaca) dan menyusun widget utama (Agenda, Jadwal Sholat, Ticker) secara mobile-optimized.
+- CMS Admin Portal responsif menggunakan menu sidebar lipat (burger menu), serta mengoptimalkan form input dan tabel data agar pas di layar smartphone.
+- Pengaturan breakpoint Tailwind responsif pada komponen-komponen display & admin.
+
 ## Requirements
 
 ### Validated
@@ -23,7 +32,8 @@ Continuous, reliable, and highly legible information broadcast on TV displays ac
 - **V-8**: Local Jakarta time date filtering to filter out passed employee leaves from display agenda.
 
 ### Active
-- None (Run `/gsd-new-milestone` to define the next milestone).
+- **MOB-01**: Responsivitas Agenda Display (Opsi 2 - hide Video & Cuaca, stack Agenda, Jadwal Sholat, Ticker).
+- **MOB-02**: Responsivitas CMS Admin Portal (Sidebar lipat / burger menu, touch-friendly tables & forms).
 
 ### Out of Scope
 - Google Slides scraping and synchronization (Deprecated).
@@ -42,6 +52,23 @@ Continuous, reliable, and highly legible information broadcast on TV displays ac
 | CMS Single Source of Truth | Deprecates scraper to allow full, reliable manual scheduling control | Shipped |
 | Google OAuth Only Login | Simplifies admin auth security flow and removes email login friction | Shipped |
 | Local Time Date Filtering | Ensures passed leave dates are auto-hidden on display client | Shipped |
+
+## Evolution
+
+This document evolves at phase transitions and milestone boundaries.
+
+**After each phase transition** (via `/gsd-transition`):
+1. Requirements invalidated? → Move to Out of Scope with reason
+2. Requirements validated? → Move to Validated with phase reference
+3. New requirements emerged? → Add to Active
+4. Decisions to log? → Add to Key Decisions
+5. "What This Is" still accurate? → Update if drifted
+
+**After each milestone** (via `/gsd-complete-milestone`):
+1. Full review of all sections
+2. Core Value check — still the right priority?
+3. Audit Out of Scope — reasons still valid?
+4. Update Context with current state
 
 ---
 *Last updated: 2026-07-02*
