@@ -66,16 +66,20 @@ router.get("/config", (req: Request, res: Response) => {
 router.post("/login", async (req: Request, res: Response) => {
   const { email } = req.body;
   
-  const adminEmail = process.env.ADMIN_GOOGLE_EMAIL || "admin@example.com";
+  const adminEmails = (process.env.ADMIN_GOOGLE_EMAIL || "admin@example.com")
+    .split(",")
+    .map(e => e.toLowerCase().trim())
+    .filter(Boolean);
   
   if (!email) {
     res.status(400).json({ status: "error", message: "Email wajib diisi" });
     return;
   }
 
-  if (email.toLowerCase().trim() === adminEmail.toLowerCase().trim()) {
+  const cleanEmail = email.toLowerCase().trim();
+  if (adminEmails.includes(cleanEmail)) {
     const token = signToken({
-      email: adminEmail,
+      email: cleanEmail,
       exp: Date.now() + 24 * 60 * 60 * 1000 // 24 Hours
     });
     res.json({ status: "success", token });
@@ -87,7 +91,10 @@ router.post("/login", async (req: Request, res: Response) => {
 // 2. Google OAuth ID Token Verification Login
 router.post("/google-login", async (req: Request, res: Response) => {
   const { idToken } = req.body;
-  const adminEmail = process.env.ADMIN_GOOGLE_EMAIL || "admin@example.com";
+  const adminEmails = (process.env.ADMIN_GOOGLE_EMAIL || "admin@example.com")
+    .split(",")
+    .map(e => e.toLowerCase().trim())
+    .filter(Boolean);
 
   if (!idToken) {
     res.status(400).json({ status: "error", message: "ID Token Google wajib disertakan" });
@@ -111,9 +118,9 @@ router.post("/google-login", async (req: Request, res: Response) => {
       return;
     }
 
-    if (googleEmail === adminEmail.toLowerCase().trim()) {
+    if (adminEmails.includes(googleEmail)) {
       const token = signToken({
-        email: adminEmail,
+        email: googleEmail,
         exp: Date.now() + 24 * 60 * 60 * 1000 // 24 Hours
       });
       res.json({ status: "success", token });
