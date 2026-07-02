@@ -75,7 +75,7 @@ export const HourlyWeather = () => {
   const nextHours = forecast.slice(1);
 
   return (
-    <section className="col-span-5 row-span-1 bg-white/70 backdrop-blur-2xl rounded-[1.5rem] px-8 py-4 shadow-sm flex items-center justify-between gap-6 border border-white/60 h-full overflow-hidden">
+    <section className="hidden md:flex col-span-5 row-span-1 bg-white/70 backdrop-blur-2xl rounded-[1.5rem] px-8 py-4 shadow-sm items-center justify-between gap-6 border border-white/60 h-full overflow-hidden">
       {/* Current Weather (Left Side) */}
       <div className="flex flex-col border-r border-slate-200/60 pr-8 shrink-0 justify-center">
         <div className="flex items-center gap-1.5 mb-1.5 opacity-80">

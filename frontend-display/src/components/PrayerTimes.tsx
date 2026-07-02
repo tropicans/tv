@@ -39,8 +39,8 @@ const PrayerTimes: React.FC<Props> = ({ prayerTime }) => {
   if (!prayerTime) return null;
 
   return (
-    <section className="col-span-5 row-span-1 bg-white/60 backdrop-blur-xl rounded-[1.5rem] px-6 py-4 shadow-xl flex items-center justify-between border border-white/40 h-full overflow-hidden">
-      <div className="flex flex-col pr-4 border-r border-outline-variant/30 shrink-0 justify-center">
+    <section className="col-span-5 row-span-1 bg-white/60 backdrop-blur-xl rounded-[1.5rem] px-6 py-4 shadow-xl flex flex-col md:flex-row items-center justify-between gap-4 md:gap-0 border border-white/40 h-auto md:h-full overflow-hidden">
+      <div className="flex flex-col items-center gap-1 md:items-start border-b pb-3 md:border-r md:pb-0 md:pr-4 md:border-b-0 border-outline-variant/30 shrink-0 justify-center w-full md:w-auto">
         <div className="flex items-center gap-2 mb-1">
           <span className="material-symbols-outlined text-primary text-xl">mosque</span>
           <span className="font-label text-[11px] font-black text-on-surface uppercase tracking-[0.10em]">Waktu Shalat</span>
@@ -48,7 +48,7 @@ const PrayerTimes: React.FC<Props> = ({ prayerTime }) => {
         <span className="text-[10px] text-outline font-bold tracking-widest">CILANDAK (UTC+7)</span>
       </div>
       
-      <div className="flex-grow flex justify-around items-center px-2">
+      <div className="flex-grow flex flex-wrap justify-center sm:justify-around gap-2 sm:gap-4 md:gap-2 items-center px-2 w-full md:w-auto">
         {PRAYER_LABELS.map((p) => {
           const isUpcoming = upcomingPrayer === p.key;
           return (

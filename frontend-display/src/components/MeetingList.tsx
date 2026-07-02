@@ -66,6 +66,16 @@ function getLocationIcon(locationType: string): string {
 }
 
 const MeetingList: React.FC<Props> = ({ meetings: rawMeetings }) => {
+  const [isMobile, setIsMobile] = React.useState(window.innerWidth < 768);
+
+  React.useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const containerRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const yPos = useRef(0);
@@ -91,7 +101,7 @@ const MeetingList: React.FC<Props> = ({ meetings: rawMeetings }) => {
   const meetings = Array.from(groupedMap.values());
 
   const needsScroll = meetings.length > 2;
-  const displayedMeetings = needsScroll ? [...meetings, ...meetings] : meetings;
+  const displayedMeetings = (needsScroll && !isMobile) ? [...meetings, ...meetings] : meetings;
 
   const isToday = (dateIso: string) => {
     const d = new Date(dateIso);
@@ -109,6 +119,12 @@ const MeetingList: React.FC<Props> = ({ meetings: rawMeetings }) => {
   if (nextUpcomingIndex === -1) nextUpcomingIndex = 0;
 
   useAnimationFrame((time, delta) => {
+    if (isMobile) {
+      if (contentRef.current && contentRef.current.style.transform) {
+        contentRef.current.style.transform = "";
+      }
+      return;
+    }
     if (!needsScroll || !containerRef.current || !contentRef.current) return;
 
     if (pauseTime.current > 0) {
@@ -157,7 +173,7 @@ const MeetingList: React.FC<Props> = ({ meetings: rawMeetings }) => {
   });
 
   return (
-    <section className="col-span-7 row-span-6 bg-[#8EC5E8] rounded-[2rem] shadow-xl p-10 flex flex-col gap-6 border border-white/40 h-full overflow-hidden">
+    <section className="col-span-7 row-span-6 bg-[#8EC5E8] rounded-[2rem] shadow-xl p-10 flex flex-col gap-6 border border-white/40 h-auto md:h-full overflow-visible md:overflow-hidden">
       <div className="flex items-center justify-between border-b border-indigo-900/10 pb-6 shrink-0">
         <h3 className="font-headline text-2xl font-extrabold text-slate-900 flex items-center gap-3">
           <span className="material-symbols-outlined text-3xl">calendar_month</span>

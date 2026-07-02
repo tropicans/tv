@@ -43,7 +43,7 @@ function AppContent() {
   }
 
   return (
-    <div className="bg-background font-body text-on-background overflow-hidden h-screen w-screen selection:bg-transparent">
+    <div className="bg-background font-body text-on-background min-h-screen overflow-y-auto md:h-screen md:overflow-hidden w-screen selection:bg-transparent">
       {/* Global Background Gradient */}
       <div className="fixed inset-0 bg-gradient-to-br from-surface-bright via-secondary-fixed to-primary-fixed/20 z-[-1]"></div>
 
@@ -51,7 +51,7 @@ function AppContent() {
       <Header />
 
       {/* Main Content Canvas (Full Width) */}
-      <main className="px-12 pt-36 pb-20 h-screen grid grid-cols-12 grid-rows-6 gap-8">
+      <main className="px-6 md:px-12 pt-48 md:pt-36 pb-20 min-h-screen md:h-screen flex flex-col gap-6 md:grid md:grid-cols-12 md:grid-rows-6 md:gap-8 md:overflow-hidden">
         
         {/* Main Content Video/Hero Card */}
         <VideoEmbed />

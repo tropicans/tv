@@ -2,7 +2,7 @@ import React from "react";
 
 const VideoEmbed: React.FC = () => {
   return (
-    <section className="col-span-5 row-span-4 bg-white/70 backdrop-blur-2xl rounded-[2rem] overflow-hidden shadow-2xl flex flex-col relative border border-white/40">
+    <section className="hidden md:flex col-span-5 row-span-4 bg-white/70 backdrop-blur-2xl rounded-[2rem] overflow-hidden shadow-2xl flex-col relative border border-white/40">
       <div className="relative flex-grow flex items-center justify-center p-4">
         <iframe
           loading="lazy"
