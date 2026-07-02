@@ -7,7 +7,6 @@ import {
   createEmployeeLeave,
   deleteEmployeeLeave,
   fetchCurrentUser,
-  loginWithEmail,
   loginWithGoogle,
   fetchAuthConfig,
   logout
@@ -22,7 +21,6 @@ import {
   Check, 
   AlertCircle, 
   ArrowLeft,
-  Lock,
   LogOut,
   UserCheck,
   Info,
@@ -125,7 +123,6 @@ export const CmsDashboard: React.FC = () => {
   const [googleClientId, setGoogleClientId] = useState<string | null>(null);
   
   // Login Form States
-  const [loginEmail, setLoginEmail] = useState("");
   const [loginError, setLoginError] = useState<string | null>(null);
   const [loginLoading, setLoginLoading] = useState(false);
 
@@ -240,23 +237,7 @@ export const CmsDashboard: React.FC = () => {
     }
   };
 
-  const handleEmailLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!loginEmail) return;
 
-    setLoginLoading(true);
-    setLoginError(null);
-    try {
-      const res = await loginWithEmail(loginEmail);
-      showNotif("Berhasil masuk sebagai Admin!");
-      setAdminEmail(res.email || loginEmail);
-      setIsAuthenticated(true);
-    } catch (e: any) {
-      setLoginError(e.message || "Email tidak terdaftar sebagai Admin.");
-    } finally {
-      setLoginLoading(false);
-    }
-  };
 
   const handleLogout = () => {
     logout();
@@ -417,42 +398,21 @@ export const CmsDashboard: React.FC = () => {
             </div>
           )}
 
-          <form onSubmit={handleEmailLogin} className="w-full space-y-4">
-            <div className="flex flex-col gap-2">
-              <label className="font-label text-[9px] font-black text-cyan-400 uppercase tracking-widest">
-                Email Admin
-              </label>
-              <input
-                type="email"
-                value={loginEmail}
-                onChange={(e) => setLoginEmail(e.target.value)}
-                placeholder="nama@kemensetneg.go.id"
-                className="w-full px-5 py-3.5 bg-white/5 border border-white/10 rounded-2xl font-body text-sm text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500/50 focus:bg-white/10 transition-all duration-300"
-                required
-              />
-            </div>
-            <button
-              type="submit"
-              disabled={loginLoading}
-              className="w-full py-3.5 bg-[#00677f] hover:bg-cyan-700 text-white rounded-2xl font-headline font-black text-xs uppercase tracking-widest shadow-lg shadow-cyan-950/50 transition-all duration-300 flex items-center justify-center gap-2"
-            >
-              {loginLoading ? (
-                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-              ) : (
-                <>
-                  <Lock size={12} strokeWidth={3} />
-                  <span>Verifikasi Email</span>
-                </>
-              )}
-            </button>
-          </form>
-
-          {googleClientId && (
-            <div className="w-full flex flex-col items-center mt-6 pt-6 border-t border-white/10">
-              <span className="font-label text-[9px] font-black text-slate-500 uppercase tracking-widest mb-4">
-                Atau Masuk Dengan
-              </span>
-              <div id="google-signin-button"></div>
+          {googleClientId ? (
+            loginLoading ? (
+              <div className="w-full flex flex-col items-center mt-4 text-white/50 font-label text-[10px] tracking-widest uppercase">
+                <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin mb-2 mx-auto"></div>
+                <span>Menghubungkan ke Google...</span>
+              </div>
+            ) : (
+              <div className="w-full flex flex-col items-center mt-4">
+                <div id="google-signin-button"></div>
+              </div>
+            )
+          ) : (
+            <div className="w-full flex flex-col items-center mt-4 text-white/50 font-label text-[10px] tracking-widest uppercase">
+              <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin mb-2 mx-auto"></div>
+              <span>Memuat Google Login...</span>
             </div>
           )}
         </div>
