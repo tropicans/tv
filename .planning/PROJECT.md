@@ -7,8 +7,8 @@ A full-stack, real-time television display dashboard system for the Indonesian M
 Continuous, reliable, and highly legible information broadcast on TV displays across different physical locations, manageable directly via a secure CMS admin panel (Single Source of Truth).
 
 ## Current State
-- **Shipped Version**: v3.0 (CMS Single Source of Truth) - ✅ SHIPPED 2026-07-02
-- **Summary**: Disables Google Slides scraper and shifts scheduling responsibility entirely to a secure CMS Admin Portal. Adds real-time database stats, Jakarta local-time date filtering for passed leave records, Google OAuth-only authentication, and renamed CMS branding to "Agenda CMS".
+- **Active Version**: v4.0 (Mobile Responsiveness) - In Progress (Phase 5 complete)
+- **Summary**: Phase 3 (Display Responsiveness), Phase 4 (CMS Admin Sidebar Drawer), and Phase 5 (CMS Admin Tables & Forms) complete and verified. Agenda Dashboard and CMS Admin Portal are now fully responsive on mobile/tablet viewports with touch-friendly elements.
 
 ## Current Milestone: v4.0 Mobile Responsiveness
 
@@ -30,10 +30,11 @@ Continuous, reliable, and highly legible information broadcast on TV displays ac
 - **V-6**: Simplified CMS Admin UI with "Dashboard Ringkasan" statistics overview panel.
 - **V-7**: Clean Google OAuth-only authentication portal with email login removed.
 - **V-8**: Local Jakarta time date filtering to filter out passed employee leaves from display agenda.
+- **MOB-01**: Responsivitas Agenda Display (Opsi 2 - hide Video & Cuaca, stack Agenda, Jadwal Sholat, Ticker). *Validated in Phase 3.*
+- **MOB-02**: Responsivitas CMS Admin Portal (Sidebar lipat / burger menu, touch-friendly tables & forms). *Validated in Phase 4 & Phase 5.*
 
 ### Active
-- **MOB-01**: Responsivitas Agenda Display (Opsi 2 - hide Video & Cuaca, stack Agenda, Jadwal Sholat, Ticker).
-- **MOB-02**: Responsivitas CMS Admin Portal (Sidebar lipat / burger menu, touch-friendly tables & forms).
+- None (All requirements for Milestone v4.0 validated)
 
 ### Out of Scope
 - Google Slides scraping and synchronization (Deprecated).
