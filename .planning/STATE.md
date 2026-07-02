@@ -17,11 +17,13 @@ progress:
 
 ## Current Active Milestone
 
-- **None**: (All phases of Milestone 3 are completed and archived. Run `/gsd-new-milestone` to start next milestone).
+- **Milestone v4.0**: Mobile Responsiveness
 
 ## Phase Progress
 
-- All Milestone 3 phases completed and archived.
+- Phase 3: Agenda Display Responsiveness (Pending)
+- Phase 4: CMS Admin Sidebar Drawer (Pending)
+- Phase 5: CMS Admin Tables & Forms (Pending)
 
 ## Active Branch / Workstream
 
