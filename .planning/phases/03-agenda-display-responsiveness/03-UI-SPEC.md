@@ -27,7 +27,7 @@ created: 2026-07-02
 
 ## Spacing Scale
 
-Declared values (must be multiples of 4):
+Declares values (must be multiples of 4):
 
 | Token | Value | Usage |
 |-------|-------|-------|
@@ -49,8 +49,8 @@ Exceptions: none
 |------|------|--------|-------------|
 | Body | 14px | 400 | 1.5 |
 | Label | 12px | 700 | 1.2 |
-| Heading | 16px | 900 | 1.2 |
-| Display | 36px | 900 | 1.1 |
+| Heading | 16px | 700 | 1.2 |
+| Display | 36px | 700 | 1.1 |
 
 ---
 
@@ -64,6 +64,15 @@ Exceptions: none
 | Destructive | #ba1a1a | Error icon background, error state details |
 
 Accent reserved for: selected manual week tabs ("Minggu Ini" / "Minggu Depan"), error screen CTA ("Coba Lagi"), and active icons.
+
+---
+
+## Visual Hierarchy & Flow
+
+| Aspect | Value | Details |
+|--------|-------|---------|
+| Primary Visual Anchor | Active Week selector & Current Day card | On mobile screens, the selected active week tab ("Minggu Ini" / "Minggu Depan") stands out using `#00677f` accent color. The current calendar day card, when active, serves as a local focal point to anchor user attention. |
+| Hierarchical Flow | 1. Digital Clock & Title (Header)<br>2. Active Week Navigation Tabs<br>3. Weekly Agenda Column/Stack<br>4. Cuti Pegawai (Leave List)<br>5. Announcement Ticker (Footer) | Establishes the order of elements drawing user attention from topmost information down through the main agenda content to secondary status/notices. |
 
 ---
 
