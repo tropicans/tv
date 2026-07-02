@@ -1,50 +1,43 @@
 # Project Roadmap
 
-## Active Milestone: v4.0 Mobile Responsiveness
+## Milestones
 
-- Goal: Menjadikan Agenda Dashboard dan CMS Admin Portal responsif serta mudah digunakan di perangkat smartphone.
-- Active Requirements: MOB-01 to MOB-09
+- ✅ **v3.0 CMS Single Source of Truth** — Phases 1-2 (shipped 2026-07-02)
+- ✅ **v4.0 Mobile Responsiveness** — Phases 3-5 (shipped 2026-07-02)
+- 🚧 **v5.0 Next Milestone** — Phases 6+ (planned)
 
-### Phase 3: Agenda Display Responsiveness
-- Goal: Make the public TV Agenda displays mobile-responsive using Option 2 layout.
-- Requirements: MOB-01, MOB-02, MOB-03
-- Plans Count: 3
-- Plans:
-  - [03-01] Responsive Test Infrastructure and Header Stack (Wave 1)
-  - [03-02] Dashboard Main Canvas and Widgets Responsiveness (Wave 2)
-  - [03-03] Weekly Calendar and Cuti Dashboard Responsiveness (Wave 2)
-- Success Criteria:
-  1. No horizontal scrollbar on viewport widths under 768px on / and /agenda.
-  2. Video and Weather widgets are hidden on mobile viewports.
-  3. Header, Agenda, Prayer Times, and Ticker stack vertically and render cleanly.
+## Phases
 
-### Phase 4: CMS Admin Sidebar Drawer
-- Goal: Create a collapsible sidebar navigation drawer with a burger menu toggle for small screens.
-- Requirements: MOB-04, MOB-05, MOB-06
-- Plans Count: 1
-- Plans:
-  - [04-01] Collapsible Sidebar Drawer Implementation and Verification (Wave 1)
-- Success Criteria:
-  1. Hamburger button visible on screen sizes below 1024px.
-  2. Sidebar slides in from left on button toggle and overlay backdrop covers the main panel.
-  3. Tapping backdrop or selecting a nav link closes the sidebar drawer.
+<details>
+<summary>✅ v3.0 CMS Single Source of Truth (Phases 1-2) — SHIPPED 2026-07-02</summary>
 
+- [x] Phase 1: Disable Scraper (Backend) (1/1 plans) — completed 2026-07-02
+- [x] Phase 2: CMS UI Refactor (Frontend) (1/1 plans) — completed 2026-07-02
 
-### Phase 5: CMS Admin Tables & Forms
-- Goal: Style the CRUD tables, forms, and statistics cards to fit smartphone viewports with touch-friendly elements.
-- Requirements: MOB-07, MOB-08, MOB-09
-- Plans Count: 1
-- Plans:
-  - [05-01] CMS Admin Tables & Forms Responsiveness (Wave 1)
-- Success Criteria:
-  1. Stats overview cards stack vertically and adjust fluidly to screen width.
-  2. CRUD forms (Agenda and Cuti) fit within mobile viewports without horizontal overflow.
-  3. Agenda and Cuti lists use scrollable containers or refactored list layouts on mobile.
-  4. Buttons and tap targets are at least 44x44px.
+</details>
 
-## Completed Milestones
+<details>
+<summary>✅ v4.0 Mobile Responsiveness (Phases 3-5) — SHIPPED 2026-07-02</summary>
 
-- **Milestone 3**: [CMS Single Source of Truth](file:///c:/Users/yudhiar/Downloads/oprek/Dev/tv/.planning/milestones/v3-ROADMAP.md) - ✅ SHIPPED 2026-07-02 (Deprecate scraper and establish CMS as sole authority)
+- [x] Phase 3: Agenda Display Responsiveness (3/3 plans) — completed 2026-07-02
+- [x] Phase 4: CMS Admin Sidebar Drawer (1/1 plans) — completed 2026-07-02
+- [x] Phase 5: CMS Admin Tables & Forms (1/1 plans) — completed 2026-07-02
+
+</details>
+
+### 🚧 v5.0 Next Milestone (Planned)
+
+- [ ] Phase 6: Future Enhancements
+
+## Progress
+
+| Phase | Milestone | Plans Complete | Status | Completed |
+|-------|-----------|----------------|--------|-----------|
+| 1. Disable Scraper | v3.0 | 1/1 | Complete | 2026-07-02 |
+| 2. CMS UI Refactor | v3.0 | 1/1 | Complete | 2026-07-02 |
+| 3. Agenda Display Responsiveness | v4.0 | 3/3 | Complete | 2026-07-02 |
+| 4. CMS Admin Sidebar Drawer | v4.0 | 1/1 | Complete | 2026-07-02 |
+| 5. CMS Admin Tables & Forms | v4.0 | 1/1 | Complete | 2026-07-02 |
 
 ---
-*Last updated: 2026-07-02*
+*Last updated: 2026-07-02 after v4.0 milestone*
