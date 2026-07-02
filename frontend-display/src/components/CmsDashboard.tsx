@@ -24,7 +24,9 @@ import {
   LogOut,
   UserCheck,
   Info,
-  BookOpen
+  BookOpen,
+  Menu,
+  X
 } from "lucide-react";
 
 interface AgendaItem {
@@ -151,6 +153,9 @@ export const CmsDashboard: React.FC = () => {
 
   // Clock Hook
   const { time, dateStr } = useClock();
+
+  // Sidebar State
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const showNotif = (text: string, type: "success" | "error" = "success") => {
     setNotif({ text, type });
@@ -425,23 +430,45 @@ export const CmsDashboard: React.FC = () => {
       {/* Global Background Gradient */}
       <div className="fixed inset-0 bg-gradient-to-br from-surface-bright via-secondary-fixed to-primary-fixed/10 z-[-1]"></div>
 
+      {/* Backdrop for mobile */}
+      {isSidebarOpen && (
+        <div 
+          onClick={() => setIsSidebarOpen(false)}
+          className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-40 lg:hidden transition-opacity duration-300"
+        />
+      )}
+
       {/* Sidebar Navigation */}
-      <aside className="w-80 bg-white/50 backdrop-blur-xl border-r border-slate-200/50 flex flex-col p-6 shrink-0 h-full">
+      <aside 
+        role="complementary"
+        className={`w-80 bg-white/90 backdrop-blur-xl border-r border-slate-200/50 flex flex-col p-6 shrink-0 h-full fixed inset-y-0 left-0 z-50 transition-transform duration-300 ease-in-out lg:static lg:translate-x-0 lg:bg-white/50 ${
+          isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
+      >
         {/* Branding header */}
-        <div className="flex items-center gap-3 pb-6 mb-6 border-b border-slate-200/60">
-          <img
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Logo_Setneg_RI.svg/960px-Logo_Setneg_RI.svg.png"
-            alt="Logo Setneg"
-            className="h-10 w-auto"
-          />
-          <div>
-            <h1 className="font-headline font-black text-sm text-cyan-900 tracking-wider uppercase">
-              Agenda CMS
-            </h1>
-            <p className="font-label text-[8px] font-black text-cyan-700 tracking-[0.2em] uppercase mt-0.5">
-              Ether Director Dashboard
-            </p>
+        <div className="flex items-center justify-between pb-6 mb-6 border-b border-slate-200/60">
+          <div className="flex items-center gap-3">
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Logo_Setneg_RI.svg/960px-Logo_Setneg_RI.svg.png"
+              alt="Logo Setneg"
+              className="h-10 w-auto"
+            />
+            <div>
+              <h1 className="font-headline font-black text-sm text-cyan-900 tracking-wider uppercase">
+                Agenda CMS
+              </h1>
+              <p className="font-label text-[8px] font-black text-cyan-700 tracking-[0.2em] uppercase mt-0.5">
+                Ether Director Dashboard
+              </p>
+            </div>
           </div>
+          <button
+            onClick={() => setIsSidebarOpen(false)}
+            className="lg:hidden p-2 text-slate-500 hover:text-slate-800 hover:bg-slate-200/40 rounded-xl transition-all min-h-[44px] min-w-[44px] flex items-center justify-center"
+            aria-label="Tutup menu sidebar"
+          >
+            <X size={18} />
+          </button>
         </div>
 
         {/* Current Active User Profile */}
@@ -462,8 +489,11 @@ export const CmsDashboard: React.FC = () => {
         {/* Navigation items */}
         <nav className="flex-grow space-y-2">
           <button
-            onClick={() => setActiveTab("dashboard")}
-            className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl font-headline font-bold text-sm transition-all duration-300 ${
+            onClick={() => {
+              setActiveTab("dashboard");
+              setIsSidebarOpen(false);
+            }}
+            className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl font-headline font-bold text-sm transition-all duration-300 min-h-[44px] ${
               activeTab === "dashboard"
                 ? "bg-primary text-white shadow-md shadow-primary/20"
                 : "text-slate-600 hover:bg-slate-200/40 hover:text-slate-800"
@@ -474,8 +504,11 @@ export const CmsDashboard: React.FC = () => {
           </button>
           
           <button
-            onClick={() => setActiveTab("agenda")}
-            className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl font-headline font-bold text-sm transition-all duration-300 ${
+            onClick={() => {
+              setActiveTab("agenda");
+              setIsSidebarOpen(false);
+            }}
+            className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl font-headline font-bold text-sm transition-all duration-300 min-h-[44px] ${
               activeTab === "agenda"
                 ? "bg-primary text-white shadow-md shadow-primary/20"
                 : "text-slate-600 hover:bg-slate-200/40 hover:text-slate-800"
@@ -486,8 +519,11 @@ export const CmsDashboard: React.FC = () => {
           </button>
 
           <button
-            onClick={() => setActiveTab("cuti")}
-            className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl font-headline font-bold text-sm transition-all duration-300 ${
+            onClick={() => {
+              setActiveTab("cuti");
+              setIsSidebarOpen(false);
+            }}
+            className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl font-headline font-bold text-sm transition-all duration-300 min-h-[44px] ${
               activeTab === "cuti"
                 ? "bg-primary text-white shadow-md shadow-primary/20"
                 : "text-slate-600 hover:bg-slate-200/40 hover:text-slate-800"
@@ -502,7 +538,7 @@ export const CmsDashboard: React.FC = () => {
         <div className="pt-6 border-t border-slate-200/60 shrink-0 space-y-3">
           <a
             href="/agenda"
-            className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-white/80 border border-slate-200 rounded-2xl font-headline font-bold text-xs text-slate-700 hover:bg-white hover:text-primary hover:border-primary/40 hover:shadow-lg transition-all duration-300"
+            className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-white/80 border border-slate-200 rounded-2xl font-headline font-bold text-xs text-slate-700 hover:bg-white hover:text-primary hover:border-primary/40 hover:shadow-lg transition-all duration-300 min-h-[44px]"
           >
             <ArrowLeft size={14} />
             <span>Buka TV Agenda</span>
@@ -510,7 +546,7 @@ export const CmsDashboard: React.FC = () => {
 
           <button
             onClick={handleLogout}
-            className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-red-50/50 hover:bg-red-50 text-red-600 border border-red-100 rounded-2xl font-headline font-bold text-xs hover:shadow-md transition-all duration-300"
+            className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-red-50/50 hover:bg-red-50 text-red-600 border border-red-100 rounded-2xl font-headline font-bold text-xs hover:shadow-md transition-all duration-300 min-h-[44px]"
           >
             <LogOut size={14} />
             <span>Log Out</span>
@@ -519,25 +555,34 @@ export const CmsDashboard: React.FC = () => {
       </aside>
 
       {/* Main Content Area */}
-      <main className="flex-grow h-full flex flex-col p-10 overflow-y-auto">
+      <main className="flex-grow h-full flex flex-col p-4 md:p-10 overflow-y-auto">
         
         {/* Top bar with clock and date */}
-        <div className="flex items-center justify-between pb-6 mb-6 border-b border-slate-200/50 shrink-0">
-          <div>
-            <h2 className="font-headline font-black text-2xl text-slate-800 tracking-tight capitalize">
-              {activeTab === "dashboard" ? "Dashboard Ringkasan" : activeTab === "agenda" ? "Kelola Jadwal Kegiatan" : "Kelola Cuti Pegawai"}
-            </h2>
-            <p className="text-xs text-slate-500 font-medium mt-1">
-              {activeTab === "dashboard" 
-                ? "Selamat datang di CMS Direktorat PPKASN. Kelola jadwal TV Agenda secara langsung."
-                : activeTab === "agenda"
-                  ? "Menambah atau menghapus jadwal kegiatan agenda mingguan PPKASN."
-                  : "Mengelola daftar cuti pegawai yang ditampilkan di panel samping TV."}
-            </p>
+        <div className="flex flex-col md:flex-row md:items-center justify-between pb-6 mb-6 border-b border-slate-200/50 shrink-0 gap-4">
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => setIsSidebarOpen(true)}
+              className="lg:hidden p-2 text-slate-650 hover:text-slate-900 bg-white/60 border border-slate-200 rounded-xl shadow-sm hover:shadow transition-all duration-300 min-h-[44px] min-w-[44px] flex items-center justify-center"
+              aria-label="Buka menu sidebar"
+            >
+              <Menu size={20} />
+            </button>
+            <div>
+              <h2 className="font-headline font-black text-2xl text-slate-800 tracking-tight capitalize">
+                {activeTab === "dashboard" ? "Dashboard Ringkasan" : activeTab === "agenda" ? "Kelola Jadwal Kegiatan" : "Kelola Cuti Pegawai"}
+              </h2>
+              <p className="text-xs text-slate-500 font-medium mt-1">
+                {activeTab === "dashboard" 
+                  ? "Selamat datang di CMS Direktorat PPKASN. Kelola jadwal TV Agenda secara langsung."
+                  : activeTab === "agenda"
+                    ? "Menambah atau menghapus jadwal kegiatan agenda mingguan PPKASN."
+                    : "Mengelola daftar cuti pegawai yang ditampilkan di panel samping TV."}
+              </p>
+            </div>
           </div>
 
           {/* Clock & Date Header Widget */}
-          <div className="flex items-center gap-6">
+          <div className="flex flex-wrap items-center justify-between md:justify-end gap-4 w-full md:w-auto">
             {notif && (
               <div className={`flex items-center gap-2 px-5 py-3 rounded-2xl shadow-lg border text-sm font-semibold animate-float ${
                 notif.type === "success" 
@@ -549,7 +594,7 @@ export const CmsDashboard: React.FC = () => {
               </div>
             )}
 
-            <div className="bg-white/60 border border-slate-200/40 px-5 py-3 rounded-2xl flex items-center gap-4 shadow-sm">
+            <div className="bg-white/60 border border-slate-200/40 px-5 py-3 rounded-2xl flex items-center gap-4 shadow-sm min-h-[44px]">
               <span className="font-headline font-black text-xl text-slate-800 tracking-tight">{time}</span>
               <div className="h-6 w-px bg-slate-300"></div>
               <span className="font-label text-[10px] font-black text-cyan-800 uppercase tracking-widest">{dateStr}</span>
@@ -562,7 +607,7 @@ export const CmsDashboard: React.FC = () => {
           {activeTab === "dashboard" && (
             <div className="space-y-8">
               {/* Statistics Overview Cards */}
-              <div className="grid grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* Agenda Stat Card */}
                 <div className="bg-white/65 backdrop-blur-xl border border-white/60 p-6 rounded-[2rem] shadow-sm flex items-center gap-5 hover:shadow-md transition-shadow duration-300">
                   <div className="w-14 h-14 rounded-2xl bg-cyan-100 flex items-center justify-center text-cyan-800 shadow-sm shrink-0">
@@ -601,7 +646,7 @@ export const CmsDashboard: React.FC = () => {
                   <span>Panduan Pengelolaan Layar TV Agenda</span>
                 </h3>
 
-                <div className="grid grid-cols-2 gap-8 text-sm leading-relaxed text-slate-650 font-medium">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-sm leading-relaxed text-slate-650 font-medium">
                   {/* Agenda Columns instructions */}
                   <div className="bg-white/50 p-6 rounded-2xl border border-slate-200/20 space-y-3">
                     <h4 className="font-headline font-bold text-slate-800 flex items-center gap-2">
@@ -638,9 +683,9 @@ export const CmsDashboard: React.FC = () => {
           )}
 
           {activeTab === "agenda" && (
-            <div className="grid grid-cols-12 gap-8 h-full">
+            <div className="flex flex-col lg:grid lg:grid-cols-12 gap-8 h-full">
               {/* Form Tambah Agenda */}
-              <div className="col-span-4 bg-white/50 backdrop-blur-xl border border-white/60 p-6 rounded-[1.8rem] shadow-sm flex flex-col gap-5 shrink-0 h-max">
+              <div className="col-span-12 lg:col-span-4 bg-white/50 backdrop-blur-xl border border-white/60 p-6 rounded-[1.8rem] shadow-sm flex flex-col gap-5 shrink-0 h-max">
                 <h3 className="font-headline font-black text-lg text-slate-800 flex items-center gap-2">
                   <Plus size={18} className="text-primary" />
                   <span>Tambah Agenda Manual</span>
@@ -656,7 +701,7 @@ export const CmsDashboard: React.FC = () => {
                       value={agendaTitle}
                       onChange={(e) => setAgendaTitle(e.target.value)}
                       placeholder="Contoh: Rakor Pengembangan Kompetensi"
-                      className="px-4 py-2.5 bg-white/80 border border-slate-200 rounded-xl font-body text-sm text-slate-800 focus:outline-none focus:border-primary/50 focus:bg-white"
+                      className="px-4 py-2.5 bg-white/80 border border-slate-200 rounded-xl font-body text-sm text-slate-800 focus:outline-none focus:border-primary/50 focus:bg-white min-h-[44px]"
                       required
                     />
                   </div>
@@ -671,7 +716,7 @@ export const CmsDashboard: React.FC = () => {
                       type="date"
                       value={agendaDateValue}
                       onChange={(e) => setAgendaDateValue(e.target.value)}
-                      className="px-4 py-2.5 bg-white/80 border border-slate-200 rounded-xl font-body text-sm text-slate-800 focus:outline-none focus:border-primary/50 focus:bg-white"
+                      className="px-4 py-2.5 bg-white/80 border border-slate-200 rounded-xl font-body text-sm text-slate-800 focus:outline-none focus:border-primary/50 focus:bg-white min-h-[44px]"
                       required
                     />
                   </div>
@@ -685,7 +730,7 @@ export const CmsDashboard: React.FC = () => {
                       value={agendaTime}
                       onChange={(e) => setAgendaTime(e.target.value)}
                       placeholder="Contoh: Pkl. 09.00 s.d. 10.30"
-                      className="px-4 py-2.5 bg-white/80 border border-slate-200 rounded-xl font-body text-sm text-slate-800 focus:outline-none focus:border-primary/50 focus:bg-white"
+                      className="px-4 py-2.5 bg-white/80 border border-slate-200 rounded-xl font-body text-sm text-slate-800 focus:outline-none focus:border-primary/50 focus:bg-white min-h-[44px]"
                     />
                   </div>
 
@@ -698,13 +743,13 @@ export const CmsDashboard: React.FC = () => {
                       value={agendaLocation}
                       onChange={(e) => setAgendaLocation(e.target.value)}
                       placeholder="Contoh: R. Rapat Lt. 1, PPKASN"
-                      className="px-4 py-2.5 bg-white/80 border border-slate-200 rounded-xl font-body text-sm text-slate-800 focus:outline-none focus:border-primary/50 focus:bg-white"
+                      className="px-4 py-2.5 bg-white/80 border border-slate-200 rounded-xl font-body text-sm text-slate-800 focus:outline-none focus:border-primary/50 focus:bg-white min-h-[44px]"
                     />
                   </div>
 
                   <button
                     type="submit"
-                    className="w-full py-3 bg-primary text-white rounded-xl font-headline font-bold text-sm hover:bg-primary/95 hover:shadow-md transition-all duration-300"
+                    className="w-full py-3 bg-primary text-white rounded-xl font-headline font-bold text-sm hover:bg-primary/95 hover:shadow-md transition-all duration-300 min-h-[44px] flex items-center justify-center"
                   >
                     Tambah Agenda
                   </button>
@@ -712,7 +757,7 @@ export const CmsDashboard: React.FC = () => {
               </div>
 
               {/* Tabel Agenda List */}
-              <div className="col-span-8 bg-white/50 backdrop-blur-xl border border-white/60 p-6 rounded-[1.8rem] shadow-sm flex flex-col gap-4 overflow-hidden h-[600px]">
+              <div className="col-span-12 lg:col-span-8 bg-white/50 backdrop-blur-xl border border-white/60 p-6 rounded-[1.8rem] shadow-sm flex flex-col gap-4 overflow-hidden h-[600px]">
                 <h3 className="font-headline font-black text-lg text-slate-800">Daftar Agenda Terdaftar</h3>
                 
                 <div className="flex-grow overflow-y-auto pr-1">
@@ -725,35 +770,67 @@ export const CmsDashboard: React.FC = () => {
                       <span>Belum ada agenda terdaftar. Silakan tambah kegiatan manual.</span>
                     </div>
                   ) : (
-                    <table className="w-full text-left border-collapse text-sm">
-                      <thead>
-                        <tr className="border-b border-slate-200 text-slate-500 font-label font-bold text-xs uppercase tracking-wider">
-                          <th className="pb-3">Hari & Tanggal</th>
-                          <th className="pb-3">Kegiatan</th>
-                          <th className="pb-3">Waktu</th>
-                          <th className="pb-3">Lokasi</th>
-                          <th className="pb-3 text-right">Aksi</th>
-                        </tr>
-                      </thead>
-                      <tbody>
+                    <>
+                      {/* Tablet and Desktop View: Table */}
+                      <div className="overflow-x-auto hidden md:block">
+                        <table className="w-full text-left border-collapse text-sm hidden md:table">
+                          <thead>
+                            <tr className="border-b border-slate-200 text-slate-500 font-label font-bold text-xs uppercase tracking-wider">
+                              <th className="pb-3">Hari & Tanggal</th>
+                              <th className="pb-3">Kegiatan</th>
+                              <th className="pb-3">Waktu</th>
+                              <th className="pb-3">Lokasi</th>
+                              <th className="pb-3 text-right">Aksi</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {agendaEvents.map((event) => (
+                              <tr key={event.id} className="border-b border-slate-200/50 hover:bg-white/20 transition-colors">
+                                <td className="py-4 font-semibold text-slate-800">{event.dateText}</td>
+                                <td className="py-4 font-bold text-slate-900 max-w-[200px] truncate">{event.title}</td>
+                                <td className="py-4 text-cyan-800 font-label font-bold text-xs">{event.timeText || "-"}</td>
+                                <td className="py-4 text-slate-500 text-xs">{event.location || "-"}</td>
+                                <td className="py-4 text-right">
+                                  <button
+                                    onClick={() => handleDeleteAgendaItem(event.id)}
+                                    className="text-red-500 hover:bg-red-50 hover:text-red-700 rounded-xl transition-all duration-300 min-h-[44px] min-w-[44px] flex items-center justify-center inline-flex"
+                                  >
+                                    <Trash2 size={16} />
+                                  </button>
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+
+                      {/* Mobile View: Card List */}
+                      <div data-testid="agenda-mobile-list" className="block md:hidden space-y-4">
                         {agendaEvents.map((event) => (
-                          <tr key={event.id} className="border-b border-slate-200/50 hover:bg-white/20 transition-colors">
-                            <td className="py-4 font-semibold text-slate-800">{event.dateText}</td>
-                            <td className="py-4 font-bold text-slate-900 max-w-[200px] truncate">{event.title}</td>
-                            <td className="py-4 text-cyan-800 font-label font-bold text-xs">{event.timeText || "-"}</td>
-                            <td className="py-4 text-slate-500 text-xs">{event.location || "-"}</td>
-                            <td className="py-4 text-right">
-                              <button
-                                onClick={() => handleDeleteAgendaItem(event.id)}
-                                className="p-2 text-red-500 hover:bg-red-50 hover:text-red-700 rounded-xl transition-all duration-300"
-                              >
-                                <Trash2 size={16} />
-                              </button>
-                            </td>
-                          </tr>
+                          <div key={event.id} className="bg-white/60 border border-slate-200/50 p-4 rounded-2xl flex items-center justify-between gap-4">
+                            <div className="space-y-1">
+                              <span className="text-[10px] font-black text-slate-400 uppercase tracking-wider block">{event.dateText}</span>
+                              <h4 className="font-bold text-slate-900 text-sm leading-snug">{event.title}</h4>
+                              <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs mt-1">
+                                {event.timeText && (
+                                  <span className="text-cyan-800 font-bold font-label">{event.timeText}</span>
+                                )}
+                                {event.location && (
+                                  <span className="text-slate-500">{event.location}</span>
+                                )}
+                              </div>
+                            </div>
+                            <button
+                              onClick={() => handleDeleteAgendaItem(event.id)}
+                              className="min-h-[44px] min-w-[44px] flex items-center justify-center text-red-500 hover:bg-red-50 hover:text-red-700 rounded-xl transition-all duration-300"
+                              aria-label="Hapus agenda"
+                            >
+                              <Trash2 size={16} />
+                            </button>
+                          </div>
                         ))}
-                      </tbody>
-                    </table>
+                      </div>
+                    </>
                   )}
                 </div>
               </div>
@@ -761,9 +838,9 @@ export const CmsDashboard: React.FC = () => {
           )}
 
           {activeTab === "cuti" && (
-            <div className="grid grid-cols-12 gap-8 h-full">
+            <div className="flex flex-col lg:grid lg:grid-cols-12 gap-8 h-full">
               {/* Form Tambah Cuti */}
-              <div className="col-span-4 bg-white/50 backdrop-blur-xl border border-white/60 p-6 rounded-[1.8rem] shadow-sm flex flex-col gap-5 shrink-0 h-max">
+              <div className="col-span-12 lg:col-span-4 bg-white/50 backdrop-blur-xl border border-white/60 p-6 rounded-[1.8rem] shadow-sm flex flex-col gap-5 shrink-0 h-max">
                 <h3 className="font-headline font-black text-lg text-slate-800 flex items-center gap-2">
                   <Plus size={18} className="text-primary" />
                   <span>Tambah Cuti Manual</span>
@@ -786,7 +863,7 @@ export const CmsDashboard: React.FC = () => {
                         setTimeout(() => setShowEmployeeDropdown(false), 200);
                       }}
                       placeholder="Ketik atau pilih nama pegawai..."
-                      className="px-4 py-2.5 bg-white/80 border border-slate-200 rounded-xl font-body text-sm text-slate-800 focus:outline-none focus:border-primary/50 focus:bg-white w-full"
+                      className="px-4 py-2.5 bg-white/80 border border-slate-200 rounded-xl font-body text-sm text-slate-800 focus:outline-none focus:border-primary/50 focus:bg-white w-full min-h-[44px]"
                       required
                     />
                     
@@ -803,7 +880,7 @@ export const CmsDashboard: React.FC = () => {
                               setCutiName(name);
                               setShowEmployeeDropdown(false);
                             }}
-                            className="w-full text-left px-4 py-3 text-xs text-slate-700 font-bold hover:bg-slate-50 hover:text-primary transition-colors focus:bg-slate-50 focus:text-primary focus:outline-none border-b border-slate-100 last:border-b-0"
+                            className="w-full text-left px-4 py-3 text-xs text-slate-700 font-bold hover:bg-slate-50 hover:text-primary transition-colors focus:bg-slate-50 focus:text-primary focus:outline-none border-b border-slate-100 last:border-b-0 min-h-[44px] flex items-center"
                           >
                             {name}
                           </button>
@@ -828,7 +905,7 @@ export const CmsDashboard: React.FC = () => {
                       value={cutiRange}
                       onChange={(e) => setCutiRange(e.target.value)}
                       placeholder="Contoh: 29 Juni s.d. 9 Juli 2026"
-                      className="px-4 py-2.5 bg-white/80 border border-slate-200 rounded-xl font-body text-sm text-slate-800 focus:outline-none focus:border-primary/50 focus:bg-white"
+                      className="px-4 py-2.5 bg-white/80 border border-slate-200 rounded-xl font-body text-sm text-slate-800 focus:outline-none focus:border-primary/50 focus:bg-white min-h-[44px]"
                       required
                     />
                   </div>
@@ -842,13 +919,13 @@ export const CmsDashboard: React.FC = () => {
                       value={cutiMonth}
                       onChange={(e) => setCutiMonth(e.target.value)}
                       placeholder="Contoh: Juli 2026"
-                      className="px-4 py-2.5 bg-white/80 border border-slate-200 rounded-xl font-body text-sm text-slate-800 focus:outline-none focus:border-primary/50 focus:bg-white"
+                      className="px-4 py-2.5 bg-white/80 border border-slate-200 rounded-xl font-body text-sm text-slate-800 focus:outline-none focus:border-primary/50 focus:bg-white min-h-[44px]"
                     />
                   </div>
 
                   <button
                     type="submit"
-                    className="w-full py-3 bg-primary text-white rounded-xl font-headline font-bold text-sm hover:bg-primary/95 hover:shadow-md transition-all duration-300"
+                    className="w-full py-3 bg-primary text-white rounded-xl font-headline font-bold text-sm hover:bg-primary/95 hover:shadow-md transition-all duration-300 min-h-[44px] flex items-center justify-center"
                   >
                     Tambah Catatan Cuti
                   </button>
@@ -856,7 +933,7 @@ export const CmsDashboard: React.FC = () => {
               </div>
 
               {/* Tabel Cuti List */}
-              <div className="col-span-8 bg-white/50 backdrop-blur-xl border border-white/60 p-6 rounded-[1.8rem] shadow-sm flex flex-col gap-4 overflow-hidden h-[600px]">
+              <div className="col-span-12 lg:col-span-8 bg-white/50 backdrop-blur-xl border border-white/60 p-6 rounded-[1.8rem] shadow-sm flex flex-col gap-4 overflow-hidden h-[600px]">
                 <h3 className="font-headline font-black text-lg text-slate-800">Daftar Cuti Terdaftar</h3>
                 
                 <div className="flex-grow overflow-y-auto pr-1">
@@ -869,33 +946,62 @@ export const CmsDashboard: React.FC = () => {
                       <span>Belum ada catatan cuti terdaftar. Silakan tambah data manual.</span>
                     </div>
                   ) : (
-                    <table className="w-full text-left border-collapse text-sm">
-                      <thead>
-                        <tr className="border-b border-slate-200 text-slate-500 font-label font-bold text-xs uppercase tracking-wider">
-                          <th className="pb-3">Nama Pegawai</th>
-                          <th className="pb-3">Rentang Tanggal Cuti</th>
-                          <th className="pb-3">Bulan</th>
-                          <th className="pb-3 text-right">Aksi</th>
-                        </tr>
-                      </thead>
-                      <tbody>
+                    <>
+                      {/* Tablet and Desktop View: Table */}
+                      <div className="overflow-x-auto hidden md:block">
+                        <table className="w-full text-left border-collapse text-sm hidden md:table">
+                          <thead>
+                            <tr className="border-b border-slate-200 text-slate-500 font-label font-bold text-xs uppercase tracking-wider">
+                              <th className="pb-3">Nama Pegawai</th>
+                              <th className="pb-3">Rentang Tanggal Cuti</th>
+                              <th className="pb-3">Bulan</th>
+                              <th className="pb-3 text-right">Aksi</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {cutiList.map((cuti) => (
+                              <tr key={cuti.id} className="border-b border-slate-200/50 hover:bg-white/20 transition-colors">
+                                <td className="py-4 font-bold text-slate-800">{cuti.employeeName}</td>
+                                <td className="py-4 text-cyan-800 font-label font-bold text-xs uppercase tracking-wider">{cuti.dateRange}</td>
+                                <td className="py-4 text-slate-500 text-xs">{cuti.monthText}</td>
+                                <td className="py-4 text-right">
+                                  <button
+                                    onClick={() => handleDeleteCutiItem(cuti.id)}
+                                    className="text-red-500 hover:bg-red-50 hover:text-red-700 rounded-xl transition-all duration-300 min-h-[44px] min-w-[44px] flex items-center justify-center inline-flex"
+                                  >
+                                    <Trash2 size={16} />
+                                  </button>
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+
+                      {/* Mobile View: Card List */}
+                      <div data-testid="cuti-mobile-list" className="block md:hidden space-y-4">
                         {cutiList.map((cuti) => (
-                          <tr key={cuti.id} className="border-b border-slate-200/50 hover:bg-white/20 transition-colors">
-                            <td className="py-4 font-bold text-slate-800">{cuti.employeeName}</td>
-                            <td className="py-4 text-cyan-800 font-label font-bold text-xs uppercase tracking-wider">{cuti.dateRange}</td>
-                            <td className="py-4 text-slate-500 text-xs">{cuti.monthText}</td>
-                            <td className="py-4 text-right">
-                              <button
-                                onClick={() => handleDeleteCutiItem(cuti.id)}
-                                className="p-2 text-red-500 hover:bg-red-50 hover:text-red-700 rounded-xl transition-all duration-300"
-                              >
-                                <Trash2 size={16} />
-                              </button>
-                            </td>
-                          </tr>
+                          <div key={cuti.id} className="bg-white/60 border border-slate-200/50 p-4 rounded-2xl flex items-center justify-between gap-4">
+                            <div className="space-y-1">
+                              <h4 className="font-bold text-slate-900 text-sm leading-snug">{cuti.employeeName}</h4>
+                              <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs mt-1">
+                                <span className="text-cyan-800 font-bold font-label uppercase">{cuti.dateRange}</span>
+                                {cuti.monthText && (
+                                  <span className="text-slate-500">{cuti.monthText}</span>
+                                )}
+                              </div>
+                            </div>
+                            <button
+                              onClick={() => handleDeleteCutiItem(cuti.id)}
+                              className="min-h-[44px] min-w-[44px] flex items-center justify-center text-red-500 hover:bg-red-50 hover:text-red-700 rounded-xl transition-all duration-300"
+                              aria-label="Hapus cuti"
+                            >
+                              <Trash2 size={16} />
+                            </button>
+                          </div>
                         ))}
-                      </tbody>
-                    </table>
+                      </div>
+                    </>
                   )}
                 </div>
               </div>

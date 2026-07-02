@@ -21,14 +21,21 @@
 ### Phase 4: CMS Admin Sidebar Drawer
 - Goal: Create a collapsible sidebar navigation drawer with a burger menu toggle for small screens.
 - Requirements: MOB-04, MOB-05, MOB-06
+- Plans Count: 1
+- Plans:
+  - [04-01] Collapsible Sidebar Drawer Implementation and Verification (Wave 1)
 - Success Criteria:
   1. Hamburger button visible on screen sizes below 1024px.
   2. Sidebar slides in from left on button toggle and overlay backdrop covers the main panel.
   3. Tapping backdrop or selecting a nav link closes the sidebar drawer.
 
+
 ### Phase 5: CMS Admin Tables & Forms
 - Goal: Style the CRUD tables, forms, and statistics cards to fit smartphone viewports with touch-friendly elements.
 - Requirements: MOB-07, MOB-08, MOB-09
+- Plans Count: 1
+- Plans:
+  - [05-01] CMS Admin Tables & Forms Responsiveness (Wave 1)
 - Success Criteria:
   1. Stats overview cards stack vertically and adjust fluidly to screen width.
   2. CRUD forms (Agenda and Cuti) fit within mobile viewports without horizontal overflow.
