@@ -1,6 +1,7 @@
 import { Router, Request, Response } from "express";
 import prisma from "../prisma";
 import { getPrayerTimesForToday } from "../utils/prayerTimes";
+import { filterPassedLeaves } from "../utils/dateFilter";
 
 const router = Router();
 
@@ -68,6 +69,11 @@ router.get("/agenda", async (_req: Request, res: Response) => {
       orderBy: { employeeName: "asc" },
     });
 
+    // Fetch display settings for timezone
+    const displaySettings = await prisma.displaySettings.findFirst();
+    const timezone = displaySettings?.timezone || "Asia/Jakarta";
+    const filteredCutiList = filterPassedLeaves(cutiList, undefined, timezone);
+
     // Get current slides URL and last sync info
     const slidesUrlSetting = await prisma.systemSetting.findUnique({
       where: { key: "agenda_slides_url" },
@@ -101,7 +107,7 @@ router.get("/agenda", async (_req: Request, res: Response) => {
 
     res.json({
       agenda: groupedAgenda,
-      cuti: cutiList,
+      cuti: filteredCutiList,
       settings: {
         slidesUrl: slidesUrlSetting?.value || null,
         lastSyncTime: lastSyncTimeSetting?.value || null,
