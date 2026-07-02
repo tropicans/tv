@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { fetchAgendaDisplayData } from "../api";
 import Header from "./Header";
 import { AnnouncementTicker } from "./AnnouncementTicker";
@@ -70,6 +70,61 @@ export const AgendaDashboard: React.FC = () => {
     }, 15 * 1000);
     return () => clearInterval(cycleInterval);
   }, []);
+
+  // Auto scroll cuti list when content overflows
+  const cutiContainerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const container = cutiContainerRef.current;
+    if (!container) return;
+
+    let scrollInterval: NodeJS.Timeout;
+    let isScrollingDown = true;
+    let holdTimer: NodeJS.Timeout;
+
+    const startScroll = () => {
+      scrollInterval = setInterval(() => {
+        const { scrollTop, scrollHeight, clientHeight } = container;
+        
+        // If content fits completely, don't scroll
+        if (scrollHeight <= clientHeight) return;
+
+        if (isScrollingDown) {
+          container.scrollTop += 1;
+          // Hit bottom
+          if (container.scrollTop + clientHeight >= scrollHeight - 1) {
+            clearInterval(scrollInterval);
+            isScrollingDown = false;
+            // Hold at bottom for 3 seconds before reversing
+            holdTimer = setTimeout(() => {
+              startScroll();
+            }, 3000);
+          }
+        } else {
+          // Scroll up twice as fast
+          container.scrollTop -= 2;
+          // Hit top
+          if (container.scrollTop <= 0) {
+            clearInterval(scrollInterval);
+            isScrollingDown = true;
+            // Hold at top for 3 seconds before scrolling down again
+            holdTimer = setTimeout(() => {
+              startScroll();
+            }, 3000);
+          }
+        }
+      }, 40); // 25 FPS scroll speed
+    };
+
+    // Delay scroll start on boot/update by 2 seconds
+    const initTimer = setTimeout(startScroll, 2000);
+
+    return () => {
+      clearTimeout(initTimer);
+      clearInterval(scrollInterval);
+      clearTimeout(holdTimer);
+    };
+  }, [data]);
 
   // Find minimum date from active agenda items to use as baseline
   const getMinDate = (): Date => {
@@ -314,7 +369,10 @@ export const AgendaDashboard: React.FC = () => {
             </div>
 
             {/* Scrollable Cuti List */}
-            <div className="flex-grow overflow-y-auto space-y-3.5 pr-1 scrollbar-none">
+            <div 
+              ref={cutiContainerRef}
+              className="flex-grow overflow-y-auto space-y-3.5 pr-1 scrollbar-none"
+            >
               {data.cuti.length === 0 ? (
                 <div className="h-full flex flex-col items-center justify-center text-center opacity-40 px-2 py-10">
                   <span className="font-body text-xs font-semibold text-slate-500">
