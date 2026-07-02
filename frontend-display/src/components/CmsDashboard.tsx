@@ -45,6 +45,55 @@ interface LeaveItem {
   monthText: string;
 }
 
+const EMPLOYEE_LIST = [
+  "Danang Mukhtar Hafid",
+  "Sri Prastiwi Utami",
+  "Djoko Suntoro",
+  "Yudhi Ardinal",
+  "Nur Rahmi Pangesti",
+  "Mohammad Harris Pratama",
+  "Lina Marselya",
+  "Anggun Jayanti Niandani",
+  "Azhari Kurniawan",
+  "Amelia Noviyanti",
+  "Hilma Yulis",
+  "Lisa Mariska",
+  "Tita Asfarandita Istirahati",
+  "Ratna Nurwitasari",
+  "Hermawan Setiaji",
+  "Satria Adi Putra",
+  "Butet Tobing",
+  "Novi Muryanto",
+  "Isna Irawati Hidayah",
+  "Henny Indriani",
+  "Fetty Hardiyanti",
+  "Handi Sucipto",
+  "Rr. Eva Mahardika Sri Handayani",
+  "Widy Hastuti",
+  "Dhian Deliani",
+  "Suryani Melawati",
+  "Lestari Purwaningsih",
+  "Ihsanira Dhevina E.",
+  "Maria Emilia Tyas Wulan Wahyu Dhati",
+  "Kukuh Pamuji",
+  "Meiryzka Widyarini",
+  "Muhammad Farid Zeno",
+  "Miladiyatu Tsania Zulfa",
+  "Dwi Ayu Lestari",
+  "Safira Arum Nisa",
+  "Ariel Matius Surbakti",
+  "Eka Aprilia Saraswati",
+  "Wahidya Difta Sunanda",
+  "Najlaa Syarif",
+  "Ulfina Yusman",
+  "Bayu Prabowo",
+  "Soehendra",
+  "Esha Rahmanshah Abrar",
+  "Syahrul Maliki",
+  "Adi Suparman",
+  "Anita Susilowati"
+];
+
 const formatIndonesianDateText = (dateString: string): string => {
   if (!dateString) return "";
   const parts = dateString.split("-"); // "YYYY-MM-DD"
@@ -97,6 +146,7 @@ export const CmsDashboard: React.FC = () => {
   const [cutiName, setCutiName] = useState("");
   const [cutiRange, setCutiRange] = useState("");
   const [cutiMonth, setCutiMonth] = useState("Juli 2026");
+  const [showEmployeeDropdown, setShowEmployeeDropdown] = useState(false);
 
   // Feedback States
   const [notif, setNotif] = useState<{ type: "success" | "error"; text: string } | null>(null);
@@ -760,18 +810,53 @@ export const CmsDashboard: React.FC = () => {
                 </h3>
 
                 <form onSubmit={handleAddCuti} className="space-y-4">
-                  <div className="flex flex-col gap-1.5">
+                  <div className="flex flex-col gap-1.5 relative">
                     <label className="font-label text-[10px] font-black text-slate-500 uppercase tracking-widest">
                       Nama Pegawai
                     </label>
                     <input
                       type="text"
                       value={cutiName}
-                      onChange={(e) => setCutiName(e.target.value)}
-                      placeholder="Contoh: Lisa Mariska"
-                      className="px-4 py-2.5 bg-white/80 border border-slate-200 rounded-xl font-body text-sm text-slate-800 focus:outline-none focus:border-primary/50 focus:bg-white"
+                      onChange={(e) => {
+                        setCutiName(e.target.value);
+                        setShowEmployeeDropdown(true);
+                      }}
+                      onFocus={() => setShowEmployeeDropdown(true)}
+                      onBlur={() => {
+                        setTimeout(() => setShowEmployeeDropdown(false), 200);
+                      }}
+                      placeholder="Ketik atau pilih nama pegawai..."
+                      className="px-4 py-2.5 bg-white/80 border border-slate-200 rounded-xl font-body text-sm text-slate-800 focus:outline-none focus:border-primary/50 focus:bg-white w-full"
                       required
                     />
+                    
+                    {/* Search Dropdown Overlay */}
+                    {showEmployeeDropdown && (
+                      <div className="absolute top-[100%] left-0 w-full bg-white border border-slate-200 rounded-2xl shadow-xl mt-1.5 max-h-60 overflow-y-auto z-[999] scrollbar-thin">
+                        {EMPLOYEE_LIST.filter(name =>
+                          name.toLowerCase().includes(cutiName.toLowerCase())
+                        ).map((name, idx) => (
+                          <button
+                            key={idx}
+                            type="button"
+                            onClick={() => {
+                              setCutiName(name);
+                              setShowEmployeeDropdown(false);
+                            }}
+                            className="w-full text-left px-4 py-3 text-xs text-slate-700 font-bold hover:bg-slate-50 hover:text-primary transition-colors focus:bg-slate-50 focus:text-primary focus:outline-none border-b border-slate-100 last:border-b-0"
+                          >
+                            {name}
+                          </button>
+                        ))}
+                        {EMPLOYEE_LIST.filter(name =>
+                          name.toLowerCase().includes(cutiName.toLowerCase())
+                        ).length === 0 && (
+                          <div className="px-4 py-3 text-xs text-slate-400 font-bold text-center">
+                            Tidak menemukan kecocokan nama, Anda tetap dapat mengetik bebas.
+                          </div>
+                        )}
+                      </div>
+                    )}
                   </div>
 
                   <div className="flex flex-col gap-1.5">
