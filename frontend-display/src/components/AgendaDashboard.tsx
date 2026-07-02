@@ -43,6 +43,15 @@ export const AgendaDashboard: React.FC = () => {
   
   // Carousel States
   const [activeWeek, setActiveWeek] = useState<1 | 2>(1);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const loadData = async () => {
     try {
@@ -65,16 +74,18 @@ export const AgendaDashboard: React.FC = () => {
 
   // Auto cycle weeks every 15 seconds
   useEffect(() => {
+    if (isMobile) return;
     const cycleInterval = setInterval(() => {
       setActiveWeek((prev) => (prev === 1 ? 2 : 1));
     }, 15 * 1000);
     return () => clearInterval(cycleInterval);
-  }, []);
+  }, [isMobile]);
 
   // Auto scroll cuti list when content overflows
   const cutiContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (isMobile) return;
     const container = cutiContainerRef.current;
     if (!container) return;
 
@@ -124,7 +135,7 @@ export const AgendaDashboard: React.FC = () => {
       clearInterval(scrollInterval);
       clearTimeout(holdTimer);
     };
-  }, [data]);
+  }, [data, isMobile]);
 
   // Find minimum date from active agenda items to use as baseline
   const getMinDate = (): Date => {
@@ -230,7 +241,7 @@ export const AgendaDashboard: React.FC = () => {
   const currentWeekDays = activeWeek === 1 ? week1Days : week2Days;
 
   return (
-    <div className="bg-background font-body text-on-background overflow-hidden h-screen w-screen selection:bg-transparent">
+    <div className="bg-background font-body text-on-background min-h-screen overflow-y-auto md:h-screen md:overflow-hidden w-screen selection:bg-transparent">
       {/* Global Background Gradient */}
       <div className="fixed inset-0 bg-gradient-to-br from-surface-bright via-secondary-fixed to-primary-fixed/20 z-[-1]"></div>
 
@@ -238,24 +249,30 @@ export const AgendaDashboard: React.FC = () => {
       <Header />
 
       {/* Main content grid */}
-      <main className="px-12 pt-36 pb-20 h-screen grid grid-cols-12 grid-rows-6 gap-8">
+      <main className="px-6 md:px-12 pt-48 md:pt-36 pb-20 min-h-screen md:h-screen flex flex-col gap-6 md:grid md:grid-cols-12 md:grid-rows-6 md:gap-8">
         
         {/* Left Side: 5 Column Weekly Agenda Calendar (span 9) */}
-        <div className="col-span-9 row-span-6 flex flex-col h-full pb-2">
+        <div className="col-span-9 row-span-6 flex flex-col h-auto md:h-full pb-2 order-1">
           
           {/* Active Week Paging Indicators Banner */}
           <div className="flex items-center gap-4 mb-4 shrink-0">
             <div className="flex items-center gap-2 p-1.5 bg-white/50 backdrop-blur-md rounded-2xl border border-white/60 shadow-sm">
-              <span className={`px-5 py-2 rounded-xl text-xs font-black tracking-widest uppercase transition-all duration-500 ${
-                activeWeek === 1 ? "bg-primary text-white shadow-sm" : "text-slate-500 font-bold"
-              }`}>
+              <button
+                onClick={() => setActiveWeek(1)}
+                className={`px-5 py-2 rounded-xl text-xs font-black tracking-widest uppercase transition-all duration-500 cursor-pointer hover:bg-slate-100/50 ${
+                  activeWeek === 1 ? "bg-primary text-white shadow-sm hover:bg-primary" : "text-slate-500 font-bold"
+                }`}
+              >
                 Minggu Ini
-              </span>
-              <span className={`px-5 py-2 rounded-xl text-xs font-black tracking-widest uppercase transition-all duration-500 ${
-                activeWeek === 2 ? "bg-primary text-white shadow-sm" : "text-slate-500 font-bold"
-              }`}>
+              </button>
+              <button
+                onClick={() => setActiveWeek(2)}
+                className={`px-5 py-2 rounded-xl text-xs font-black tracking-widest uppercase transition-all duration-500 cursor-pointer hover:bg-slate-100/50 ${
+                  activeWeek === 2 ? "bg-primary text-white shadow-sm hover:bg-primary" : "text-slate-500 font-bold"
+                }`}
+              >
                 Minggu Depan
-              </span>
+              </button>
             </div>
             
             {/* MD3 Tonal Pagination Dots */}
@@ -274,7 +291,7 @@ export const AgendaDashboard: React.FC = () => {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: activeWeek === 1 ? 150 : -150 }}
                 transition={{ duration: 0.5, ease: "easeInOut" }}
-                className="grid grid-cols-5 gap-6 h-full absolute inset-0"
+                className="flex flex-col gap-6 w-full h-auto md:grid md:grid-cols-5 md:h-full md:absolute md:inset-0"
               >
                 {currentWeekDays.map((dayDate, index) => {
                   const { dateText, events } = getEventsForDate(dayDate);
@@ -284,7 +301,7 @@ export const AgendaDashboard: React.FC = () => {
                   return (
                     <div
                       key={dayName}
-                      className="flex flex-col h-full bg-white/95 rounded-[2.2rem] p-6 shadow-md border border-white/80 overflow-hidden"
+                      className="flex flex-col h-auto md:h-full bg-white/95 rounded-[2.2rem] p-6 shadow-md border border-white/80 overflow-hidden"
                     >
                       {/* Day Header */}
                       <div className="pb-4 mb-4 border-b border-slate-200/50 flex flex-col shrink-0">
@@ -297,7 +314,7 @@ export const AgendaDashboard: React.FC = () => {
                       </div>
 
                       {/* Events list */}
-                      <div className="flex-grow overflow-y-auto space-y-4 pr-1 scrollbar-none">
+                      <div className="flex-grow overflow-y-visible md:overflow-y-auto space-y-4 pr-1 scrollbar-none">
                         {events.length === 0 ? (
                           <div className="h-full flex flex-col items-center justify-center text-center opacity-25 py-12">
                             <Calendar size={28} className="text-slate-450 mb-2" strokeWidth={1.5} />
@@ -309,10 +326,10 @@ export const AgendaDashboard: React.FC = () => {
                           events.map((event, eIdx) => (
                             <div
                               key={event.id || eIdx}
-                              className="bg-white rounded-[1.2rem] p-5 shadow-sm border border-slate-100 flex flex-col gap-2.5 hover:shadow-md transition-shadow duration-300"
+                              className="bg-white rounded-[1.2rem] p-4 md:p-5 shadow-sm border border-slate-100 flex flex-col gap-2.5 hover:shadow-md transition-shadow duration-300"
                             >
                               {/* Title */}
-                              <h4 className="font-headline font-black text-base text-slate-900 tracking-tight leading-snug">
+                              <h4 className="font-headline font-black text-sm md:text-base text-slate-900 tracking-tight leading-snug">
                                 {event.title}
                               </h4>
 
@@ -344,14 +361,14 @@ export const AgendaDashboard: React.FC = () => {
         </div>
 
         {/* Right Side: Cuti List + Weather Widget (span 3) */}
-        <div className="col-span-3 row-span-6 flex flex-col gap-6 h-full pb-2">
+        <div className="col-span-3 row-span-6 flex flex-col gap-6 h-auto md:h-full pb-2 order-2">
           
           {/* Cuti Pegawai Panel */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="flex-grow flex flex-col bg-white/95 rounded-[2.2rem] p-6 border border-white/80 shadow-md overflow-hidden"
+            className="flex-grow flex flex-col bg-white/95 rounded-[2.2rem] p-6 border border-white/80 shadow-md overflow-visible md:overflow-hidden h-auto md:h-full"
           >
             {/* Panel Title */}
             <div className="flex items-center gap-3 pb-4 mb-4 border-b border-slate-200/50 shrink-0">
@@ -371,7 +388,7 @@ export const AgendaDashboard: React.FC = () => {
             {/* Scrollable Cuti List */}
             <div 
               ref={cutiContainerRef}
-              className="flex-grow overflow-y-auto space-y-3.5 pr-1 scrollbar-none"
+              className="flex-grow overflow-y-visible md:overflow-y-auto space-y-3.5 pr-1 scrollbar-none"
             >
               {data.cuti.length === 0 ? (
                 <div className="h-full flex flex-col items-center justify-center text-center opacity-40 px-2 py-10">
@@ -403,7 +420,7 @@ export const AgendaDashboard: React.FC = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
-            className="shrink-0 h-40"
+            className="hidden md:block shrink-0 h-40"
           >
             <HourlyWeather />
           </motion.div>
