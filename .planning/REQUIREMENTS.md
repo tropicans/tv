@@ -47,15 +47,15 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| MOB-01 | Phase 1 | Pending |
-| MOB-02 | Phase 1 | Pending |
-| MOB-03 | Phase 1 | Pending |
-| MOB-04 | Phase 2 | Pending |
-| MOB-05 | Phase 2 | Pending |
-| MOB-06 | Phase 2 | Pending |
-| MOB-07 | Phase 3 | Pending |
-| MOB-08 | Phase 3 | Pending |
-| MOB-09 | Phase 3 | Pending |
+| MOB-01 | Phase 3 | Pending |
+| MOB-02 | Phase 3 | Pending |
+| MOB-03 | Phase 3 | Pending |
+| MOB-04 | Phase 4 | Pending |
+| MOB-05 | Phase 4 | Pending |
+| MOB-06 | Phase 4 | Pending |
+| MOB-07 | Phase 5 | Pending |
+| MOB-08 | Phase 5 | Pending |
+| MOB-09 | Phase 5 | Pending |
 
 **Coverage:**
 - v1 requirements: 9 total

@@ -38,9 +38,14 @@ created: 2026-07-02
 
 | Task ID | Plan | Wave | Requirement | Threat Ref | Secure Behavior | Test Type | Automated Command | File Exists | Status |
 |---------|------|------|-------------|------------|-----------------|-----------|-------------------|-------------|--------|
-| 03-01-01 | 01 | 1 | MOB-02 | — | N/A | unit | `docker run --rm -e CI=true -v "c:/Users/yudhiar/Downloads/oprek/Dev/tv/frontend-display:/app" -w /app node:20-alpine npm test -- src/components/ResponsiveLayout.test.tsx` | ❌ W0 | ⬜ pending |
-| 03-01-02 | 01 | 1 | MOB-03 | — | N/A | unit | `docker run --rm -e CI=true -v "c:/Users/yudhiar/Downloads/oprek/Dev/tv/frontend-display:/app" -w /app node:20-alpine npm test -- src/components/ResponsiveLayout.test.tsx` | ❌ W0 | ⬜ pending |
-| 03-01-03 | 01 | 1 | MOB-01 | — | N/A | unit | `docker run --rm -e CI=true -v "c:/Users/yudhiar/Downloads/oprek/Dev/tv/frontend-display:/app" -w /app node:20-alpine npm test -- src/components/ResponsiveLayout.test.tsx` | ❌ W0 | ⬜ pending |
+| 03-01-01 | 01 | 1 | MOB-01 | — | N/A | unit | `docker run --rm -e CI=true -v "c:/Users/yudhiar/Downloads/oprek/Dev/tv/frontend-display:/app" -w /app node:20-alpine npm test -- src/components/ResponsiveLayout.test.tsx` | ❌ W0 | ⬜ pending |
+| 03-01-02 | 01 | 1 | MOB-03 | — | N/A | unit | `docker run --rm -e CI=true -v "c:/Users/yudhiar/Downloads/oprek/Dev/tv/frontend-display:/app" -w /app node:20-alpine npm test -- src/components/ResponsiveLayout.test.tsx` | ✅ | ⬜ pending |
+| 03-02-01 | 02 | 2 | MOB-01 | — | N/A | unit | `docker run --rm -e CI=true -v "c:/Users/yudhiar/Downloads/oprek/Dev/tv/frontend-display:/app" -w /app node:20-alpine npm test -- src/components/ResponsiveLayout.test.tsx` | ✅ | ⬜ pending |
+| 03-02-02 | 02 | 2 | MOB-02 | — | N/A | unit | `docker run --rm -e CI=true -v "c:/Users/yudhiar/Downloads/oprek/Dev/tv/frontend-display:/app" -w /app node:20-alpine npm test -- src/components/ResponsiveLayout.test.tsx` | ✅ | ⬜ pending |
+| 03-02-03 | 02 | 2 | MOB-01 | — | N/A | unit | `docker run --rm -e CI=true -v "c:/Users/yudhiar/Downloads/oprek/Dev/tv/frontend-display:/app" -w /app node:20-alpine npm test -- src/components/ResponsiveLayout.test.tsx` | ✅ | ⬜ pending |
+| 03-03-01 | 03 | 2 | MOB-01 | — | N/A | unit | `docker run --rm -e CI=true -v "c:/Users/yudhiar/Downloads/oprek/Dev/tv/frontend-display:/app" -w /app node:20-alpine npm test -- src/components/ResponsiveLayout.test.tsx` | ✅ | ⬜ pending |
+| 03-03-02 | 03 | 2 | MOB-03 | — | N/A | unit | `docker run --rm -e CI=true -v "c:/Users/yudhiar/Downloads/oprek/Dev/tv/frontend-display:/app" -w /app node:20-alpine npm test -- src/components/ResponsiveLayout.test.tsx` | ✅ | ⬜ pending |
+| 03-03-03 | 03 | 2 | MOB-01 | — | N/A | unit | `docker run --rm -e CI=true -v "c:/Users/yudhiar/Downloads/oprek/Dev/tv/frontend-display:/app" -w /app node:20-alpine npm test -- src/components/ResponsiveLayout.test.tsx` | ✅ | ⬜ pending |
 
 *Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky*
 

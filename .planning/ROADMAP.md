@@ -8,6 +8,11 @@
 ### Phase 3: Agenda Display Responsiveness
 - Goal: Make the public TV Agenda displays mobile-responsive using Option 2 layout.
 - Requirements: MOB-01, MOB-02, MOB-03
+- Plans Count: 3
+- Plans:
+  - [03-01] Responsive Test Infrastructure and Header Stack (Wave 1)
+  - [03-02] Dashboard Main Canvas and Widgets Responsiveness (Wave 2)
+  - [03-03] Weekly Calendar and Cuti Dashboard Responsiveness (Wave 2)
 - Success Criteria:
   1. No horizontal scrollbar on viewport widths under 768px on / and /agenda.
   2. Video and Weather widgets are hidden on mobile viewports.
