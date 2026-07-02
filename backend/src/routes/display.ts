@@ -58,4 +58,60 @@ router.get("/ticker", async (_req: Request, res: Response) => {
   }
 });
 
+router.get("/agenda", async (_req: Request, res: Response) => {
+  try {
+    const agendaEvents = await prisma.agendaEvent.findMany({
+      orderBy: { date: "asc" },
+    });
+
+    const cutiList = await prisma.employeeLeave.findMany({
+      orderBy: { employeeName: "asc" },
+    });
+
+    // Get current slides URL and last sync info
+    const slidesUrlSetting = await prisma.systemSetting.findUnique({
+      where: { key: "agenda_slides_url" },
+    });
+    const lastSyncTimeSetting = await prisma.systemSetting.findUnique({
+      where: { key: "agenda_last_sync_time" },
+    });
+    const lastSyncStatusSetting = await prisma.systemSetting.findUnique({
+      where: { key: "agenda_last_sync_status" },
+    });
+
+    // Group agenda events by dateText
+    const groupedMap = new Map<string, { dateText: string; date: Date; events: any[] }>();
+    for (const event of agendaEvents) {
+      if (!groupedMap.has(event.dateText)) {
+        groupedMap.set(event.dateText, {
+          dateText: event.dateText,
+          date: event.date,
+          events: []
+        });
+      }
+      groupedMap.get(event.dateText)!.events.push({
+        id: event.id,
+        title: event.title,
+        timeText: event.timeText,
+        location: event.location,
+      });
+    }
+
+    const groupedAgenda = Array.from(groupedMap.values());
+
+    res.json({
+      agenda: groupedAgenda,
+      cuti: cutiList,
+      settings: {
+        slidesUrl: slidesUrlSetting?.value || null,
+        lastSyncTime: lastSyncTimeSetting?.value || null,
+        lastSyncStatus: lastSyncStatusSetting?.value || null,
+      },
+    });
+  } catch (err) {
+    console.error("Error in /display/agenda route:", err);
+    res.status(500).json({ error: "Failed to load agenda display data" });
+  }
+});
+
 export default router;

@@ -21,4 +21,12 @@ router.post("/meetings", async (req, res, next) => {
   }
 });
 
+// Endpoint to trigger manual slides scrape (Deprecated)
+router.post("/agenda", async (req, res, next) => {
+  res.status(410).json({
+    status: "error",
+    message: "Fitur sinkronisasi Google Slides telah dinonaktifkan. Silakan input kegiatan secara langsung melalui menu CMS."
+  });
+});
+
 export default router;

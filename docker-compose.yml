@@ -30,6 +30,8 @@ services:
       PORT: 6001
       TOMTOM_API_KEY: ${TOMTOM_API_KEY:-}
       TICKER_SHEETS_URL: ${TICKER_SHEETS_URL:-}
+      ADMIN_GOOGLE_EMAIL: ${ADMIN_GOOGLE_EMAIL:-}
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-}
     depends_on:
       postgres:
         condition: service_healthy

@@ -8,7 +8,19 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
+model Announcement {
+  id          String    @id @default(uuid())
+  title       String
+  description String?
+  icon        String    @default("campaign")
+  status      String    @default("draft") // draft, scheduled, live, expired
+  isFeatured  Boolean   @default(false)
+  imageUrl    String?
+  scheduledAt DateTime?
+  expiresAt   DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
 
 model Meeting {
   id           String    @id @default(uuid())
@@ -23,6 +35,15 @@ model Meeting {
   updatedAt    DateTime  @updatedAt
 }
 
+model Kpi {
+  id        String @id @default(uuid())
+  label     String
+  value     String
+  icon      String
+  trend     String?
+  trendType String @default("neutral") // positive, negative, neutral
+  sortOrder Int    @default(0)
+}
 
 model PrayerTime {
   id      String   @id @default(uuid())
@@ -37,3 +58,37 @@ model PrayerTime {
   @@unique([date, city])
 }
 
+model DisplaySettings {
+  id           String @id @default(uuid())
+  brandColor   String @default("#8EC5E8")
+  activeLayout String @default("bento")
+  weatherCity  String @default("Jakarta")
+  timezone     String @default("Asia/Jakarta")
+}
+
+model AgendaEvent {
+  id        String   @id @default(uuid())
+  title     String
+  timeText  String
+  location  String
+  dateText  String
+  date      DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model EmployeeLeave {
+  id           String   @id @default(uuid())
+  employeeName String
+  dateRange    String
+  monthText    String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model SystemSetting {
+  key       String   @id
+  value     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

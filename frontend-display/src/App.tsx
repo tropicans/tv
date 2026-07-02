@@ -1,17 +1,16 @@
 import React from "react";
 import { useDisplayData } from "./hooks/useDisplayData";
 import Header from "./components/Header";
-import { RadialBackground } from "./components/ui/RadialBackground";
 import VideoEmbed from "./components/VideoEmbed";
 import { HourlyWeather } from "./components/HourlyWeather";
 import PrayerTimes from "./components/PrayerTimes";
 import MeetingList from "./components/MeetingList";
 import { AnnouncementTicker } from "./components/AnnouncementTicker";
-import logoBerAKHLAK from "./assets/Logo_BerAKHLAK.png";
-import logoBangga from "./assets/Logo-Bangga-Melayani-Bangsa.png";
+import { AgendaDashboard } from "./components/AgendaDashboard";
+import { CmsDashboard } from "./components/CmsDashboard";
 
-
-function App() {
+// Default dashboard layout split out to respect React Rules of Hooks
+function AppContent() {
   const { data, error } = useDisplayData();
 
   if (error) {
@@ -71,6 +70,26 @@ function App() {
       <AnnouncementTicker />
     </div>
   );
+}
+
+// Router shell
+function App() {
+  const path = window.location.pathname;
+  const searchParams = new URLSearchParams(window.location.search);
+  const view = searchParams.get("view");
+
+  // Route to the new TV Agenda view
+  if (path === "/agenda" || view === "agenda") {
+    return <AgendaDashboard />;
+  }
+
+  // Route to the CMS Admin panel
+  if (path === "/admin" || path === "/cms" || view === "admin" || view === "cms") {
+    return <CmsDashboard />;
+  }
+
+  // Default display dashboard
+  return <AppContent />;
 }
 
 export default App;
