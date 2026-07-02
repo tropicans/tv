@@ -385,7 +385,7 @@ export const CmsDashboard: React.FC = () => {
             className="h-16 w-auto mb-6 drop-shadow-md"
           />
           <h2 className="font-headline font-black text-xl text-white tracking-wider uppercase text-center">
-            Setneg CMS Admin
+            Agenda CMS Admin
           </h2>
           <p className="font-label text-[10px] font-black text-cyan-400 tracking-[0.2em] uppercase mt-1 mb-8 text-center">
             Security Gateway
@@ -436,7 +436,7 @@ export const CmsDashboard: React.FC = () => {
           />
           <div>
             <h1 className="font-headline font-black text-sm text-cyan-900 tracking-wider uppercase">
-              Setneg CMS
+              Agenda CMS
             </h1>
             <p className="font-label text-[8px] font-black text-cyan-700 tracking-[0.2em] uppercase mt-0.5">
               Ether Director Dashboard
