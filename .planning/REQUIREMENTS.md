@@ -9,11 +9,11 @@ Requirements for Milestone v5.0 Cuti Archiving.
 
 ### Database & Backend API
 
-- [ ] **LVARCH-01**: Modifikasi skema Prisma database untuk menambahkan field `isArchived` Boolean (default false) ke model `EmployeeLeave`.
-- [ ] **LVARCH-02**: Perbarui Backend API GET `/api/agenda/cuti` untuk mendukung query parameter `filter` (`active`, `archived`, atau `all`) agar admin bisa mengambil data sesuai status pengarsipan.
-- [ ] **LVARCH-03**: Modifikasi Backend API DELETE `/api/agenda/cuti/:id` untuk melakukan soft delete (mengubah `isArchived` menjadi `true`) alih-alih menghapus baris data secara permanen.
-- [ ] **LVARCH-04**: Tambahkan Backend API POST/PUT `/api/agenda/cuti/:id/restore` (atau unarchive) untuk memulihkan status cuti terarsip menjadi aktif kembali (`isArchived: false`).
-- [ ] **LVARCH-05**: Pastikan API display `/api/display/agenda` secara otomatis memfilter data cuti pegawai agar hanya menyertakan data cuti aktif (`isArchived: false`) dan menyembunyikan cuti yang terarsip.
+- [x] **LVARCH-01**: Modifikasi skema Prisma database untuk menambahkan field `isArchived` Boolean (default false) ke model `EmployeeLeave`.
+- [x] **LVARCH-02**: Perbarui Backend API GET `/api/agenda/cuti` untuk mendukung query parameter `filter` (`active`, `archived`, atau `all`) agar admin bisa mengambil data sesuai status pengarsipan.
+- [x] **LVARCH-03**: Modifikasi Backend API DELETE `/api/agenda/cuti/:id` untuk melakukan soft delete (mengubah `isArchived` menjadi `true`) alih-alih menghapus baris data secara permanen.
+- [x] **LVARCH-04**: Tambahkan Backend API POST/PUT `/api/agenda/cuti/:id/restore` (atau unarchive) untuk memulihkan status cuti terarsip menjadi aktif kembali (`isArchived: false`).
+- [x] **LVARCH-05**: Pastikan API display `/api/display/agenda` secara otomatis memfilter data cuti pegawai agar hanya menyertakan data cuti aktif (`isArchived: false`) dan menyembunyikan cuti yang terarsip.
 
 ### Frontend API & CMS UI
 
@@ -40,17 +40,18 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| LVARCH-01 | Phase 6 | Pending |
-| LVARCH-02 | Phase 6 | Pending |
-| LVARCH-03 | Phase 6 | Pending |
-| LVARCH-04 | Phase 6 | Pending |
-| LVARCH-05 | Phase 6 | Pending |
+| LVARCH-01 | Phase 6 | Complete |
+| LVARCH-02 | Phase 6 | Complete |
+| LVARCH-03 | Phase 6 | Complete |
+| LVARCH-04 | Phase 6 | Complete |
+| LVARCH-05 | Phase 6 | Complete |
 | LVARCH-06 | Phase 7 | Pending |
 | LVARCH-07 | Phase 7 | Pending |
 | LVARCH-08 | Phase 7 | Pending |
 | LVARCH-09 | Phase 7 | Pending |
 
 **Coverage:**
+
 - v1 requirements: 9 total
 - Mapped to phases: 9
 - Unmapped: 0 ✓

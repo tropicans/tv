@@ -27,7 +27,7 @@
 
 ### 🚧 v5.0 Cuti Archiving (In Progress)
 
-- [ ] Phase 6: Backend API & Database for Cuti Archiving
+- [x] Phase 6: Backend API & Database for Cuti Archiving (completed 2026-07-07)
 - [ ] Phase 7: CMS Admin UI for Cuti Archiving
 
 ### Phase 6: Backend API & Database for Cuti Archiving
@@ -37,6 +37,7 @@
 - **Plans**: 0 plans
 
 Plans:
+
 - [ ] TBD (run /gsd-plan-phase 6 to break down)
 
 ### Phase 7: CMS Admin UI for Cuti Archiving
@@ -46,6 +47,7 @@ Plans:
 - **Plans**: 0 plans
 
 Plans:
+
 - [ ] TBD (run /gsd-plan-phase 7 to break down)
 
 ## Progress
@@ -57,7 +59,7 @@ Plans:
 | 3. Agenda Display Responsiveness | v4.0 | 3/3 | Complete | 2026-07-02 |
 | 4. CMS Admin Sidebar Drawer | v4.0 | 1/1 | Complete | 2026-07-02 |
 | 5. CMS Admin Tables & Forms | v4.0 | 1/1 | Complete | 2026-07-02 |
-| 6. Backend API & DB | v5.0 | 0/1 | Not started | - |
+| 6. Backend API & DB | v5.0 | 1/1 | Complete    | 2026-07-07 |
 | 7. CMS Admin UI | v5.0 | 0/1 | Not started | - |
 
 ---
