@@ -66,6 +66,7 @@ router.get("/agenda", async (_req: Request, res: Response) => {
     });
 
     const cutiList = await prisma.employeeLeave.findMany({
+      where: { isArchived: false },
       orderBy: { employeeName: "asc" },
     });
 

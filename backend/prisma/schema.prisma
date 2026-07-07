@@ -82,6 +82,7 @@ model EmployeeLeave {
   employeeName String
   dateRange    String
   monthText    String
+  isArchived   Boolean  @default(false)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 }

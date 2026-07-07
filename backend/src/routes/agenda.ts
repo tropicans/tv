@@ -81,7 +81,20 @@ router.delete("/:id", async (req: Request, res: Response) => {
 // GET all leaves
 router.get("/cuti", async (req: Request, res: Response) => {
   try {
+    const { filter } = req.query;
+    let where: any = {};
+
+    if (filter === "archived") {
+      where.isArchived = true;
+    } else if (filter === "all") {
+      // do not filter by isArchived
+    } else {
+      // Default: active (isArchived = false)
+      where.isArchived = false;
+    }
+
     const leaves = await prisma.employeeLeave.findMany({
+      where,
       orderBy: { employeeName: "asc" },
     });
     res.json(leaves);
@@ -128,20 +141,47 @@ router.put("/cuti/:id", async (req: Request, res: Response) => {
     });
     res.json(leave);
   } catch (err: any) {
-    res.status(500).json({ error: "Failed to update employee leave", details: err.message });
+    if (err.code === "P2025") {
+      res.status(404).json({ error: "Employee leave record not found" });
+    } else {
+      res.status(500).json({ error: "Failed to update employee leave", details: err.message });
+    }
   }
 });
 
-// DELETE a leave
+// DELETE a leave (soft-delete)
 router.delete("/cuti/:id", async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    await prisma.employeeLeave.delete({
+    await prisma.employeeLeave.update({
       where: { id },
+      data: { isArchived: true },
     });
-    res.json({ status: "success", message: "Employee leave record deleted successfully" });
+    res.json({ status: "success", message: "Employee leave record archived successfully" });
   } catch (err: any) {
-    res.status(500).json({ error: "Failed to delete employee leave", details: err.message });
+    if (err.code === "P2025") {
+      res.status(404).json({ error: "Employee leave record not found" });
+    } else {
+      res.status(500).json({ error: "Failed to delete employee leave", details: err.message });
+    }
+  }
+});
+
+// RESTORE a soft-deleted leave
+router.post("/cuti/:id/restore", async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const leave = await prisma.employeeLeave.update({
+      where: { id },
+      data: { isArchived: false },
+    });
+    res.json(leave);
+  } catch (err: any) {
+    if (err.code === "P2025") {
+      res.status(404).json({ error: "Employee leave record not found" });
+    } else {
+      res.status(500).json({ error: "Failed to restore employee leave", details: err.message });
+    }
   }
 });
 
