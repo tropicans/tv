@@ -7,18 +7,8 @@ A full-stack, real-time television display dashboard system for the Indonesian M
 Continuous, reliable, and highly legible information broadcast on TV displays across different physical locations, manageable directly via a secure CMS admin panel (Single Source of Truth).
 
 ## Current State
-- **Active Version**: v5.0 (Cuti Archiving) - Phase 6 Complete
-- **Summary**: Milestone v4.0 is complete and shipped. v5.0 is focused on archiving employee leave (cuti) records instead of hard-deleting them. Phase 6 (Backend API & Database) is completed and verified.
-
-## Current Milestone: v5.0 Cuti Archiving
-
-**Goal:** Menghindari penghapusan data cuti pegawai dengan mengarsipkannya sehingga data historis tetap tersimpan, dan menyediakan antarmuka pengarsipan di CMS Admin.
-
-**Target features:**
-- Modifikasi skema database `EmployeeLeave` untuk mendukung status pengarsipan (kolom `isArchived` boolean atau sejenisnya).
-- Perbarui API Backend (CRUD cuti) untuk mendukung fungsi pengarsipan (archive/unarchive) dan pemfilteran data cuti aktif vs diarsipkan.
-- Perbarui halaman "Kelola Cuti" di CMS Admin untuk mengganti aksi "Hapus" dengan "Arsipkan", serta menyediakan tab/filter untuk melihat riwayat "Cuti Diarsipkan".
-- Pastikan API display `/api/display/agenda` secara otomatis memfilter dan menyembunyikan cuti yang diarsipkan.
+- **Active Version**: v5.0 (Cuti Archiving)
+- **Summary**: Milestone v5.0 is complete and shipped. It introduces employee leave (cuti) soft-delete archiving, horizontal status tabs for active vs. archived leaves in the CMS Admin panel, custom modal confirmations, and display filtering.
 
 ## Requirements
 
@@ -33,24 +23,27 @@ Continuous, reliable, and highly legible information broadcast on TV displays ac
 - **V-8**: Local Jakarta time date filtering to filter out passed employee leaves from display agenda.
 - ✓ **MOB-01**: Responsivitas Agenda Display (Opsi 2) — v4.0
 - ✓ **MOB-02**: Responsivitas CMS Admin Portal — v4.0
-- ✓ **LVARCH-01**: Skema database EmployeeLeave dengan status isArchived — Phase 6
-- ✓ **LVARCH-02**: Filter data cuti di display agenda public (sembunyikan data diarsipkan) — Phase 6
-- ✓ **LVARCH-03**: Filter data cuti di admin GET (active/archived/all) — Phase 6
-- ✓ **LVARCH-04**: Soft-delete data cuti pada DELETE endpoint — Phase 6
-- ✓ **LVARCH-05**: Endpoint restore/unarchive data cuti — Phase 6
+- ✓ **LVARCH-01**: Skema database EmployeeLeave dengan status isArchived — v5.0 (Phase 6)
+- ✓ **LVARCH-02**: Filter data cuti di display agenda public (sembunyikan data diarsipkan) — v5.0 (Phase 6)
+- ✓ **LVARCH-03**: Filter data cuti di admin GET (active/archived/all) — v5.0 (Phase 6)
+- ✓ **LVARCH-04**: Soft-delete data cuti pada DELETE endpoint — v5.0 (Phase 6)
+- ✓ **LVARCH-05**: Endpoint restore/unarchive data cuti — v5.0 (Phase 6)
+- ✓ **LVARCH-06**: Frontend API client updated with helper and aliases — v5.0 (Phase 7)
+- ✓ **LVARCH-07**: CMS UI splits lists into "Cuti Aktif" and "Cuti Terarsip" — v5.0 (Phase 7)
+- ✓ **LVARCH-08**: CMS UI replaces Hapus with Arsipkan action & modal — v5.0 (Phase 7)
+- ✓ **LVARCH-09**: CMS UI adds Pulihkan action & modal for archived leaves — v5.0 (Phase 7)
 
 ### Active
-- **LVARCH-06**: Penggantian aksi Hapus dengan Arsipkan di CMS Admin UI
-- **LVARCH-07**: Tombol filter/tab "Aktif" vs "Diarsipkan" di CMS Admin UI
-- **LVARCH-08**: Aksi Restore untuk data cuti yang diarsipkan di CMS Admin UI
-- **LVARCH-09**: Validasi integrasi end-to-end pengarsipan cuti di UI
+- (None yet — define next milestone via `/gsd-new-milestone`)
 
 ### Out of Scope
 - Google Slides scraping and synchronization (Deprecated).
+- Hard delete from CMS UI (To maintain audit log integrity).
 
 ## Context
 - **tv spec**: wall-displays viewed from a distance (mouse-free).
 - **input method**: 100% manual CRUD overrides inside the CMS.
+- **codebase**: ~5,355 LOC of TypeScript/React. Running backend (Express, Prisma, PostgreSQL) and frontend (React, TailwindCSS) inside Docker containers.
 
 ## Key Decisions
 
@@ -62,6 +55,8 @@ Continuous, reliable, and highly legible information broadcast on TV displays ac
 | CMS Single Source of Truth | Deprecates scraper to allow full, reliable manual scheduling control | Shipped |
 | Google OAuth Only Login | Simplifies admin auth security flow and removes email login friction | Shipped |
 | Local Time Date Filtering | Ensures passed leave dates are auto-hidden on display client | Shipped |
+| Cuti Soft-Delete & Restore API | Performs soft-delete on DELETE and restore on POST /restore to preserve employee leave logs | Shipped in v5.0 |
+| Custom Modal Confirmations | Replaced simple window.confirm with Tailwind modal overlays for a premium, unified user experience | Shipped in v5.0 |
 
 ## Evolution
 
@@ -81,4 +76,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-07-07 after completing Phase 6*
+*Last updated: 2026-07-07 after shipping Milestone v5.0*

@@ -1,5 +1,16 @@
 # Milestones
 
+## v5.0 Cuti Archiving (Shipped: 2026-07-07)
+
+**Phases completed:** 2 phases, 2 plans, 6 tasks
+
+**Key accomplishments:**
+
+- Successfully implemented the database schema modifications, migration execution, and CRUD API handlers to support employee leave archiving and display filtering.
+- CMS Admin UI update replacing hard delete with soft-delete archive, custom modal overlays, and tabs filtering
+
+---
+
 ## v4.0 Mobile Responsiveness (Shipped: 2026-07-02)
 
 **Phases completed:** 3 phases, 5 plans, 12 tasks

@@ -2,12 +2,12 @@
 gsd_state_version: 1.0
 milestone: v5.0
 milestone_name: Cuti Archiving
-current_phase: 7
-status: completed
+current_phase: 0
+status: Awaiting next milestone
 stopped_at: Phase 7 context gathered
-last_updated: "2026-07-07T02:58:52.124Z"
+last_updated: "2026-07-07T03:03:24.827Z"
 last_activity: 2026-07-07
-last_activity_desc: Phase 7 marked complete
+last_activity_desc: Milestone v5.0 completed and archived
 progress:
   total_phases: 2
   completed_phases: 2
@@ -37,10 +37,10 @@ current_phase_name: cms-admin-ui-for-cuti-archiving
 
 ## Current Position
 
-Phase: 7 — COMPLETE
-Plan: 1 of 1
-Status: Phase 7 complete
-Last activity: 2026-07-07 — Phase 7 marked complete
+Phase: Milestone v5.0 complete
+Plan: —
+Status: Awaiting next milestone
+Last activity: 2026-07-07 — Milestone v5.0 completed and archived
 
 ## Session
 
@@ -50,4 +50,4 @@ Last activity: 2026-07-07 — Phase 7 marked complete
 
 ## Operator Next Steps
 
-- Start the next phase with /gsd-discuss-phase 6
+- Start the next milestone with /gsd-new-milestone
