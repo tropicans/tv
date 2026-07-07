@@ -17,10 +17,10 @@ Requirements for Milestone v5.0 Cuti Archiving.
 
 ### Frontend API & CMS UI
 
-- [ ] **LVARCH-06**: Ubah Frontend API client helper `deleteLeaveItem` untuk melakukan aksi pengarsipan (soft-delete), serta tambahkan helper `restoreLeaveItem` untuk pemulihan.
-- [ ] **LVARCH-07**: Perbarui CMS Admin UI tab "Kelola Cuti" agar membagi tampilan daftar cuti menjadi dua tab/tampilan terpisah: "Cuti Aktif" dan "Cuti Terarsip".
-- [ ] **LVARCH-08**: Pada CMS Admin UI, ganti tombol/ikon aksi "Hapus" menjadi aksi "Arsipkan" dengan konfirmasi dialog yang sesuai.
-- [ ] **LVARCH-09**: Pada CMS Admin UI daftar "Cuti Terarsip", tambahkan tombol aksi "Pulihkan" (Restore) untuk mengaktifkan kembali data cuti tersebut ke status aktif.
+- [x] **LVARCH-06**: Ubah Frontend API client helper `deleteLeaveItem` untuk melakukan aksi pengarsipan (soft-delete), serta tambahkan helper `restoreLeaveItem` untuk pemulihan.
+- [x] **LVARCH-07**: Perbarui CMS Admin UI tab "Kelola Cuti" agar membagi tampilan daftar cuti menjadi dua tab/tampilan terpisah: "Cuti Aktif" dan "Cuti Terarsip".
+- [x] **LVARCH-08**: Pada CMS Admin UI, ganti tombol/ikon aksi "Hapus" menjadi aksi "Arsipkan" dengan konfirmasi dialog yang sesuai.
+- [x] **LVARCH-09**: Pada CMS Admin UI daftar "Cuti Terarsip", tambahkan tombol aksi "Pulihkan" (Restore) untuk mengaktifkan kembali data cuti tersebut ke status aktif.
 
 ## v2 Requirements
 
@@ -45,10 +45,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 | LVARCH-03 | Phase 6 | Complete |
 | LVARCH-04 | Phase 6 | Complete |
 | LVARCH-05 | Phase 6 | Complete |
-| LVARCH-06 | Phase 7 | Pending |
-| LVARCH-07 | Phase 7 | Pending |
-| LVARCH-08 | Phase 7 | Pending |
-| LVARCH-09 | Phase 7 | Pending |
+| LVARCH-06 | Phase 7 | Complete |
+| LVARCH-07 | Phase 7 | Complete |
+| LVARCH-08 | Phase 7 | Complete |
+| LVARCH-09 | Phase 7 | Complete |
 
 **Coverage:**
 
