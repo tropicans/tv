@@ -40,20 +40,20 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| LVARCH-01 | Pending | Pending |
-| LVARCH-02 | Pending | Pending |
-| LVARCH-03 | Pending | Pending |
-| LVARCH-04 | Pending | Pending |
-| LVARCH-05 | Pending | Pending |
-| LVARCH-06 | Pending | Pending |
-| LVARCH-07 | Pending | Pending |
-| LVARCH-08 | Pending | Pending |
-| LVARCH-09 | Pending | Pending |
+| LVARCH-01 | Phase 6 | Pending |
+| LVARCH-02 | Phase 6 | Pending |
+| LVARCH-03 | Phase 6 | Pending |
+| LVARCH-04 | Phase 6 | Pending |
+| LVARCH-05 | Phase 6 | Pending |
+| LVARCH-06 | Phase 7 | Pending |
+| LVARCH-07 | Phase 7 | Pending |
+| LVARCH-08 | Phase 7 | Pending |
+| LVARCH-09 | Phase 7 | Pending |
 
 **Coverage:**
 - v1 requirements: 9 total
-- Mapped to phases: 0
-- Unmapped: 9 ⚠️
+- Mapped to phases: 9
+- Unmapped: 0 ✓
 
 ---
 *Requirements defined: 2026-07-07*

@@ -30,6 +30,24 @@
 - [ ] Phase 6: Backend API & Database for Cuti Archiving
 - [ ] Phase 7: CMS Admin UI for Cuti Archiving
 
+### Phase 6: Backend API & Database for Cuti Archiving
+
+- **Goal**: Modifikasi skema database EmployeeLeave untuk mendukung status pengarsipan (isArchived) serta perbarui Backend API (GET/DELETE/POST/PUT) untuk mendukung fungsi pengarsipan dan penyaringan data cuti aktif vs diarsipkan.
+- **Requirements**: LVARCH-01, LVARCH-02, LVARCH-03, LVARCH-04, LVARCH-05
+- **Plans**: 0 plans
+
+Plans:
+- [ ] TBD (run /gsd-plan-phase 6 to break down)
+
+### Phase 7: CMS Admin UI for Cuti Archiving
+
+- **Goal**: Perbarui halaman "Kelola Cuti" di CMS Admin untuk mengganti aksi "Hapus" dengan "Arsipkan", serta menyediakan tab/filter untuk melihat riwayat "Cuti Diarsipkan".
+- **Requirements**: LVARCH-06, LVARCH-07, LVARCH-08, LVARCH-09
+- **Plans**: 0 plans
+
+Plans:
+- [ ] TBD (run /gsd-plan-phase 7 to break down)
+
 ## Progress
 
 | Phase | Milestone | Plans Complete | Status | Completed |
