@@ -33,14 +33,47 @@
 
 ---
 
+## Milestone: v5.0 — Cuti Archiving
+
+**Shipped:** 2026-07-07
+**Phases:** 2 | **Plans:** 2 | **Sessions:** 1
+
+### What Was Built
+- **Archiving DB Schema & Migration**: Added `isArchived` Boolean column to the `EmployeeLeave` model in Prisma and generated/applied the Postgres database migration.
+- **Soft-Delete & Filtering API**: Refactored backend DELETE to soft-delete, created POST `/restore` to restore leaves, and updated GET routes to support filter queries (`active`, `archived`, `all`) and automatically hide archived leaves from the public display.
+- **CMS Admin UI split tab and modals**: Replaced the hard Hapus button with an Arsipkan button, created tab sub-navigation for "Cuti Aktif" and "Cuti Terarsip", added Pulihkan button for archived leaves, and built custom Tailwind overlays for modal confirmation.
+
+### What Worked
+- Replacing the raw `window.confirm` with custom React component states for dialog modal overlays created a highly polished, interactive UI.
+- Mocking the new API helpers in Jest test suites allowed testing the UI behavior easily without modifying global tests.
+
+### What Was Inefficient
+- Node.js missing on the host environment required using the absolute path to the NVM symlink node binary (`C:\nvm4w\nodejs\node.exe`) for executing local GSD tools.
+
+### Patterns Established
+- Component state-driven confirmation modals replacing default browser dialogs.
+- Active/Archived sub-tab horizontal navigation with stateful query parameters for data lists.
+
+### Key Lessons
+- Soft-deletions preserve employee data history and prevent accidental permanent deletions of records.
+- Standardizing confirmation interactions as Tailwind overlay components improves the aesthetic consistency of admin panels.
+
+### Cost Observations
+- Model mix: 100% Gemini 3.5 Flash (Medium)
+- Sessions: 1
+- Notable: Fast implementation of backend-to-frontend archiving workflow.
+
+---
+
 ## Cross-Milestone Trends
 
-### Process Evolution
+## Process Evolution
 
 | Milestone | Sessions | Phases | Key Change |
 |-----------|----------|--------|------------|
 | v3.0 | 3 | 2 | Single source of truth CMS migration |
 | v4.0 | 4 | 3 | Breakpoint testing pattern via simulated resize events |
+| v5.0 | 1 | 2 | Soft-delete archiving and horizontal list tab filtering |
 
 ### Cumulative Quality
 
@@ -48,8 +81,10 @@
 |-----------|-------|----------|-------------------|
 | v3.0 | 1 | 100% | 0 |
 | v4.0 | 3 | 100% | 0 |
+| v5.0 | 5 | 100% | 0 |
 
 ### Top Lessons (Verified Across Milestones)
 
 1. Combining backend/frontend data modifications into a single source of truth eliminates scraper sync issues.
 2. Simulated viewport tests are extremely effective in guaranteeing responsive layouts work correctly under specific breakpoints.
+3. Soft-delete archiving provides historical log preservation and preserves system audit trails.
