@@ -29,6 +29,8 @@ jest.mock('lucide-react', () => ({
   BookOpen: () => <div data-testid="icon-bookopen" />,
   Menu: () => <div data-testid="icon-menu" />,
   X: () => <div data-testid="icon-x" />,
+  Archive: () => <div data-testid="icon-archive" />,
+  RotateCcw: () => <div data-testid="icon-rotateccw" />,
 }));
 
 // Mock API module
@@ -37,6 +39,11 @@ jest.mock('../api', () => ({
   fetchAuthConfig: jest.fn(),
   fetchAgendaEvents: jest.fn(),
   fetchEmployeeLeaves: jest.fn(),
+  createEmployeeLeave: jest.fn(),
+  deleteEmployeeLeave: jest.fn(),
+  restoreEmployeeLeave: jest.fn(),
+  deleteLeaveItem: jest.fn(),
+  restoreLeaveItem: jest.fn(),
   loginWithGoogle: jest.fn(),
   logout: jest.fn(),
 }));

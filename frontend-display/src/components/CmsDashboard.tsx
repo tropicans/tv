@@ -6,6 +6,7 @@ import {
   fetchEmployeeLeaves,
   createEmployeeLeave,
   deleteEmployeeLeave,
+  restoreEmployeeLeave,
   fetchCurrentUser,
   loginWithGoogle,
   fetchAuthConfig,
@@ -26,7 +27,9 @@ import {
   Info,
   BookOpen,
   Menu,
-  X
+  X,
+  Archive,
+  RotateCcw
 } from "lucide-react";
 
 interface AgendaItem {
@@ -130,6 +133,9 @@ export const CmsDashboard: React.FC = () => {
 
   // Tab State
   const [activeTab, setActiveTab] = useState<"dashboard" | "agenda" | "cuti">("dashboard");
+  const [cutiFilter, setCutiFilter] = useState<"active" | "archived">("active");
+  const [cutiToArchive, setCutiToArchive] = useState<LeaveItem | null>(null);
+  const [cutiToRestore, setCutiToRestore] = useState<LeaveItem | null>(null);
   
   // Data States
   const [agendaEvents, setAgendaEvents] = useState<AgendaItem[]>([]);
@@ -262,10 +268,10 @@ export const CmsDashboard: React.FC = () => {
     }
   };
 
-  const loadCutiData = async () => {
+  const loadCutiData = async (filter?: "active" | "archived" | "all") => {
     setLoadingData(true);
     try {
-      const res = await fetchEmployeeLeaves();
+      const res = await fetchEmployeeLeaves(filter || cutiFilter);
       setCutiList(res);
     } catch (e: any) {
       showNotif("Gagal memuat daftar cuti: " + e.message, "error");
@@ -279,13 +285,13 @@ export const CmsDashboard: React.FC = () => {
     
     if (activeTab === "dashboard") {
       loadAgendaData();
-      loadCutiData();
+      loadCutiData("active");
     } else if (activeTab === "agenda") {
       loadAgendaData();
     } else if (activeTab === "cuti") {
-      loadCutiData();
+      loadCutiData(cutiFilter);
     }
-  }, [activeTab, isAuthenticated]);
+  }, [activeTab, isAuthenticated, cutiFilter]);
 
   const handleAddAgenda = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -341,7 +347,8 @@ export const CmsDashboard: React.FC = () => {
       showNotif("Cuti pegawai berhasil ditambahkan!");
       setCutiName("");
       setCutiRange("");
-      loadCutiData();
+      setCutiFilter("active");
+      loadCutiData("active");
     } catch (e: any) {
       showNotif("Gagal menambahkan cuti: " + e.message, "error");
     }
@@ -934,7 +941,31 @@ export const CmsDashboard: React.FC = () => {
 
               {/* Tabel Cuti List */}
               <div className="col-span-12 lg:col-span-8 bg-white/50 backdrop-blur-xl border border-white/60 p-6 rounded-[1.8rem] shadow-sm flex flex-col gap-4 overflow-hidden h-[600px]">
-                <h3 className="font-headline font-black text-lg text-slate-800">Daftar Cuti Terdaftar</h3>
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-200/50 pb-3">
+                  <h3 className="font-headline font-black text-lg text-slate-800">Daftar Cuti Terdaftar</h3>
+                  <div className="flex bg-slate-100 p-1 rounded-xl w-max">
+                    <button
+                      onClick={() => setCutiFilter("active")}
+                      className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all min-h-[36px] ${
+                        cutiFilter === "active"
+                          ? "bg-white text-primary shadow-sm"
+                          : "text-slate-500 hover:text-slate-800"
+                      }`}
+                    >
+                      Cuti Aktif
+                    </button>
+                    <button
+                      onClick={() => setCutiFilter("archived")}
+                      className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all min-h-[36px] ${
+                        cutiFilter === "archived"
+                          ? "bg-white text-primary shadow-sm"
+                          : "text-slate-500 hover:text-slate-800"
+                      }`}
+                    >
+                      Cuti Terarsip
+                    </button>
+                  </div>
+                </div>
                 
                 <div className="flex-grow overflow-y-auto pr-1">
                   {loadingData ? (
@@ -943,7 +974,11 @@ export const CmsDashboard: React.FC = () => {
                     </div>
                   ) : cutiList.length === 0 ? (
                     <div className="text-center opacity-40 py-20">
-                      <span>Belum ada catatan cuti terdaftar. Silakan tambah data manual.</span>
+                      <span>
+                        {cutiFilter === "active" 
+                          ? "Belum ada catatan cuti terdaftar. Silakan tambah data manual." 
+                          : "Tidak ada catatan cuti terarsip."}
+                      </span>
                     </div>
                   ) : (
                     <>
@@ -965,19 +1000,30 @@ export const CmsDashboard: React.FC = () => {
                                 <td className="py-4 text-cyan-800 font-label font-bold text-xs uppercase tracking-wider">{cuti.dateRange}</td>
                                 <td className="py-4 text-slate-500 text-xs">{cuti.monthText}</td>
                                 <td className="py-4 text-right">
-                                  <button
-                                    onClick={() => handleDeleteCutiItem(cuti.id)}
-                                    className="text-red-500 hover:bg-red-50 hover:text-red-700 rounded-xl transition-all duration-300 min-h-[44px] min-w-[44px] flex items-center justify-center inline-flex"
-                                  >
-                                    <Trash2 size={16} />
-                                  </button>
+                                  {cutiFilter === "active" ? (
+                                    <button
+                                      onClick={() => setCutiToArchive(cuti)}
+                                      className="text-amber-500 hover:bg-amber-50 hover:text-amber-700 rounded-xl transition-all duration-300 min-h-[44px] min-w-[44px] flex items-center justify-center inline-flex"
+                                      title="Arsipkan"
+                                    >
+                                      <Archive size={16} />
+                                    </button>
+                                  ) : (
+                                    <button
+                                      onClick={() => setCutiToRestore(cuti)}
+                                      className="text-emerald-500 hover:bg-emerald-50 hover:text-emerald-700 rounded-xl transition-all duration-300 min-h-[44px] min-w-[44px] flex items-center justify-center inline-flex"
+                                      title="Pulihkan"
+                                    >
+                                      <RotateCcw size={16} />
+                                    </button>
+                                  )}
                                 </td>
                               </tr>
                             ))}
                           </tbody>
                         </table>
                       </div>
-
+ 
                       {/* Mobile View: Card List */}
                       <div data-testid="cuti-mobile-list" className="block md:hidden space-y-4">
                         {cutiList.map((cuti) => (
@@ -991,13 +1037,23 @@ export const CmsDashboard: React.FC = () => {
                                 )}
                               </div>
                             </div>
-                            <button
-                              onClick={() => handleDeleteCutiItem(cuti.id)}
-                              className="min-h-[44px] min-w-[44px] flex items-center justify-center text-red-500 hover:bg-red-50 hover:text-red-700 rounded-xl transition-all duration-300"
-                              aria-label="Hapus cuti"
-                            >
-                              <Trash2 size={16} />
-                            </button>
+                            {cutiFilter === "active" ? (
+                              <button
+                                onClick={() => setCutiToArchive(cuti)}
+                                className="min-h-[44px] min-w-[44px] flex items-center justify-center text-amber-500 hover:bg-amber-50 hover:text-amber-700 rounded-xl transition-all duration-300"
+                                aria-label="Arsipkan cuti"
+                              >
+                                <Archive size={16} />
+                              </button>
+                            ) : (
+                              <button
+                                onClick={() => setCutiToRestore(cuti)}
+                                className="min-h-[44px] min-w-[44px] flex items-center justify-center text-emerald-500 hover:bg-emerald-50 hover:text-emerald-700 rounded-xl transition-all duration-300"
+                                aria-label="Pulihkan cuti"
+                              >
+                                <RotateCcw size={16} />
+                              </button>
+                            )}
                           </div>
                         ))}
                       </div>
@@ -1009,6 +1065,84 @@ export const CmsDashboard: React.FC = () => {
           )}
         </div>
       </main>
+
+      {/* Modal Konfirmasi Arsipkan */}
+      {cutiToArchive && (
+        <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-slate-900/50 backdrop-blur-sm">
+          <div className="bg-white p-6 rounded-[2rem] shadow-xl border border-slate-200/50 max-w-md w-full mx-4">
+            <h3 className="font-headline font-black text-lg text-slate-800 mb-2 flex items-center gap-2">
+              <Archive className="text-amber-500" size={20} />
+              <span>Arsipkan Catatan Cuti</span>
+            </h3>
+            <p className="text-sm text-slate-600 font-medium mb-6">
+              Apakah Anda yakin ingin mengarsipkan catatan cuti untuk <strong>{cutiToArchive.employeeName}</strong>? Catatan ini akan dipindahkan ke tab "Cuti Terarsip".
+            </p>
+            <div className="flex justify-end gap-3">
+              <button
+                onClick={() => setCutiToArchive(null)}
+                className="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl text-xs min-h-[44px]"
+              >
+                Batal
+              </button>
+              <button
+                onClick={async () => {
+                  const id = cutiToArchive.id;
+                  setCutiToArchive(null);
+                  try {
+                    await deleteEmployeeLeave(id);
+                    showNotif("Catatan cuti berhasil diarsipkan!");
+                    loadCutiData();
+                  } catch (e: any) {
+                    showNotif("Gagal mengarsipkan cuti: " + e.message, "error");
+                  }
+                }}
+                className="px-4 py-2.5 bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-xl text-xs min-h-[44px]"
+              >
+                Arsipkan
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modal Konfirmasi Pulihkan */}
+      {cutiToRestore && (
+        <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-slate-900/50 backdrop-blur-sm">
+          <div className="bg-white p-6 rounded-[2rem] shadow-xl border border-slate-200/50 max-w-md w-full mx-4">
+            <h3 className="font-headline font-black text-lg text-slate-800 mb-2 flex items-center gap-2">
+              <RotateCcw className="text-emerald-500" size={20} />
+              <span>Pulihkan Catatan Cuti</span>
+            </h3>
+            <p className="text-sm text-slate-655 font-medium mb-6">
+              Apakah Anda yakin ingin memulihkan catatan cuti untuk <strong>{cutiToRestore.employeeName}</strong>? Catatan ini akan kembali ke tab "Cuti Aktif".
+            </p>
+            <div className="flex justify-end gap-3">
+              <button
+                onClick={() => setCutiToRestore(null)}
+                className="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl text-xs min-h-[44px]"
+              >
+                Batal
+              </button>
+              <button
+                onClick={async () => {
+                  const id = cutiToRestore.id;
+                  setCutiToRestore(null);
+                  try {
+                    await restoreEmployeeLeave(id);
+                    showNotif("Catatan cuti berhasil dipulihkan!");
+                    loadCutiData();
+                  } catch (e: any) {
+                    showNotif("Gagal memulihkan cuti: " + e.message, "error");
+                  }
+                }}
+                className="px-4 py-2.5 bg-emerald-500 hover:bg-emerald-600 text-white font-bold rounded-xl text-xs min-h-[44px]"
+              >
+                Pulihkan
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

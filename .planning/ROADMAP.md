@@ -28,7 +28,7 @@
 ### 🚧 v5.0 Cuti Archiving (In Progress)
 
 - [x] Phase 6: Backend API & Database for Cuti Archiving (completed 2026-07-07)
-- [ ] Phase 7: CMS Admin UI for Cuti Archiving
+- [x] Phase 7: CMS Admin UI for Cuti Archiving (completed 2026-07-07)
 
 ### Phase 6: Backend API & Database for Cuti Archiving
 
@@ -44,9 +44,11 @@ Plans:
 
 - **Goal**: Perbarui halaman "Kelola Cuti" di CMS Admin untuk mengganti aksi "Hapus" dengan "Arsipkan", serta menyediakan tab/filter untuk melihat riwayat "Cuti Diarsipkan".
 - **Requirements**: LVARCH-06, LVARCH-07, LVARCH-08, LVARCH-09
-- **Plans**: 0 plans
+- **Plans**: 1/1 plans complete
 
 Plans:
+
+- [x] 07-01-PLAN.md
 
 - [ ] TBD (run /gsd-plan-phase 7 to break down)
 
@@ -60,7 +62,7 @@ Plans:
 | 4. CMS Admin Sidebar Drawer | v4.0 | 1/1 | Complete | 2026-07-02 |
 | 5. CMS Admin Tables & Forms | v4.0 | 1/1 | Complete | 2026-07-02 |
 | 6. Backend API & DB | v5.0 | 1/1 | Complete    | 2026-07-07 |
-| 7. CMS Admin UI | v5.0 | 0/1 | Not started | - |
+| 7. CMS Admin UI | v5.0 | 1/1 | Complete   | 2026-07-07 |
 
 ---
 *Last updated: 2026-07-07 after starting Milestone v5.0*

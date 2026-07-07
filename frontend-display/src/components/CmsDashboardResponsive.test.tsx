@@ -29,6 +29,8 @@ jest.mock('lucide-react', () => ({
   BookOpen: () => <div data-testid="icon-bookopen" />,
   Menu: () => <div data-testid="icon-menu" />,
   X: () => <div data-testid="icon-x" />,
+  Archive: () => <div data-testid="icon-archive" />,
+  RotateCcw: () => <div data-testid="icon-rotateccw" />,
 }));
 
 // Mock API module
@@ -37,6 +39,11 @@ jest.mock('../api', () => ({
   fetchAuthConfig: jest.fn(),
   fetchAgendaEvents: jest.fn(),
   fetchEmployeeLeaves: jest.fn(),
+  createEmployeeLeave: jest.fn(),
+  deleteEmployeeLeave: jest.fn(),
+  restoreEmployeeLeave: jest.fn(),
+  deleteLeaveItem: jest.fn(),
+  restoreLeaveItem: jest.fn(),
   loginWithGoogle: jest.fn(),
   logout: jest.fn(),
 }));
@@ -220,10 +227,10 @@ describe('CMS Admin Tables & Forms Responsiveness Tests', () => {
     const firstAutocompleteItem = screen.getByRole('button', { name: 'Danang Mukhtar Hafid' });
     expect(firstAutocompleteItem).toHaveClass('min-h-[44px]');
 
-    // Check delete trash button has min-h/min-w/flex classes
+    // Check archive button has min-h/min-w/flex classes
     const deleteButtons = screen.getAllByRole('button');
     const deleteButton = deleteButtons.find(
-      btn => btn.querySelector('[data-testid="icon-trash"]') || btn.getAttribute('aria-label') === 'Hapus cuti'
+      btn => btn.querySelector('[data-testid="icon-archive"]') || btn.getAttribute('aria-label') === 'Arsipkan cuti'
     );
     expect(deleteButton).toBeDefined();
     expect(deleteButton).toHaveClass('min-h-[44px]');

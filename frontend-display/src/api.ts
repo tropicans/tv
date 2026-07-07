@@ -160,8 +160,9 @@ export async function deleteAgendaEvent(id: string) {
 
 
 // 5. Employee Cuti CRUD APIs (Protected)
-export async function fetchEmployeeLeaves() {
-  const res = await fetch(`${API_BASE}/agenda/cuti`, {
+export async function fetchEmployeeLeaves(filter?: 'active' | 'archived' | 'all') {
+  const url = filter ? `${API_BASE}/agenda/cuti?filter=${filter}` : `${API_BASE}/agenda/cuti`;
+  const res = await fetch(url, {
     headers: getHeaders(),
   });
   if (!res.ok) throw new Error("Failed to fetch employee leaves");
@@ -196,3 +197,16 @@ export async function deleteEmployeeLeave(id: string) {
   if (!res.ok) throw new Error("Failed to delete employee leave");
   return res.json();
 }
+
+export async function restoreEmployeeLeave(id: string) {
+  const res = await fetch(`${API_BASE}/agenda/cuti/${id}/restore`, {
+    method: "POST",
+    headers: getHeaders(),
+  });
+  if (!res.ok) throw new Error("Failed to restore employee leave");
+  return res.json();
+}
+
+// Compatibility aliases
+export const deleteLeaveItem = deleteEmployeeLeave;
+export const restoreLeaveItem = restoreEmployeeLeave;
