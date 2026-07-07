@@ -7,17 +7,18 @@ A full-stack, real-time television display dashboard system for the Indonesian M
 Continuous, reliable, and highly legible information broadcast on TV displays across different physical locations, manageable directly via a secure CMS admin panel (Single Source of Truth).
 
 ## Current State
-- **Active Version**: v4.0 (Mobile Responsiveness) - Complete
-- **Summary**: All phases (Phase 3, 4, and 5) are complete, verified, and tested. TV Agenda displays stack vertically without horizontal scrolling on mobile screens. CMS Admin has a fully functional collapsible sidebar drawer menu and touch-friendly CRUD tables/forms (target size >= 44x44px).
+- **Active Version**: v5.0 (Cuti Archiving) - Planning
+- **Summary**: Milestone v4.0 is complete and shipped. v5.0 is focused on archiving employee leave (cuti) records instead of hard-deleting them.
 
-## Current Milestone: v4.0 Mobile Responsiveness
+## Current Milestone: v5.0 Cuti Archiving
 
-**Goal:** Menjadikan Agenda Dashboard dan CMS Admin Portal responsif serta mudah digunakan di perangkat smartphone.
+**Goal:** Menghindari penghapusan data cuti pegawai dengan mengarsipkannya sehingga data historis tetap tersimpan, dan menyediakan antarmuka pengarsipan di CMS Admin.
 
 **Target features:**
-- Halaman Display Utama/Agenda responsif dengan menyembunyikan widget sekunder (Video & Cuaca) dan menyusun widget utama (Agenda, Jadwal Sholat, Ticker) secara mobile-optimized.
-- CMS Admin Portal responsif menggunakan menu sidebar lipat (burger menu), serta mengoptimalkan form input dan tabel data agar pas di layar smartphone.
-- Pengaturan breakpoint Tailwind responsif pada komponen-komponen display & admin.
+- Modifikasi skema database `EmployeeLeave` untuk mendukung status pengarsipan (misalnya kolom `isArchived` boolean atau sejenisnya).
+- Perbarui API Backend (CRUD cuti) untuk mendukung fungsi pengarsipan (archive/unarchive) dan pemfilteran data cuti aktif vs diarsipkan.
+- Perbarui halaman "Kelola Cuti" di CMS Admin untuk mengganti aksi "Hapus" dengan "Arsipkan", serta menyediakan tab/filter untuk melihat riwayat "Cuti Diarsipkan".
+- Pastikan API display `/api/display/agenda` secara otomatis memfilter dan menyembunyikan cuti yang diarsipkan.
 
 ## Requirements
 
@@ -72,4 +73,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-07-02 after v4.0 milestone*
+*Last updated: 2026-07-07 after starting Milestone v5.0*

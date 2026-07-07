@@ -1,54 +1,49 @@
 ---
 gsd_state_version: 1.0
-milestone: v4.0
-milestone_name: Mobile Responsiveness
-current_phase: 0
-status: Awaiting next milestone
-stopped_at: Phase 5 context gathered
-last_updated: "2026-07-02T03:28:09.461Z"
-last_activity: 2026-07-02
-last_activity_desc: Milestone v4.0 completed and archived
+milestone: v5.0
+milestone_name: Cuti Archiving
+status: planning
+last_updated: "2026-07-07T02:22:00.000Z"
+last_activity: 2026-07-07
 progress:
-  total_phases: 3
-  completed_phases: 3
-  total_plans: 5
-  completed_plans: 5
-  percent: 100
-current_phase_name: CMS Admin Tables & Forms
+  total_phases: 2
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
+  percent: 0
 ---
 
 # Project State
 
 ## Current Active Milestone
 
-- **Milestone v4.0**: Mobile Responsiveness
+- **Milestone v5.0**: Cuti Archiving
 
 ## Phase Progress
 
-- Phase 3: Agenda Display Responsiveness (Complete)
-- Phase 4: CMS Admin Sidebar Drawer (Complete)
-- Phase 5: CMS Admin Tables & Forms (Pending)
+- Phase 6: Backend API & Database for Cuti Archiving (Not started)
+- Phase 7: CMS Admin UI for Cuti Archiving (Not started)
 
 ## Active Branch / Workstream
 
 - Local workstream: `main`
 
 ---
-*Last updated: 2026-07-02*
+*Last updated: 2026-07-07*
 
 ## Current Position
 
-Phase: Milestone v4.0 complete
+Phase: Not started (defining requirements)
 Plan: —
-Status: Awaiting next milestone
-Last activity: 2026-07-02 — Milestone v4.0 completed and archived
+Status: Defining requirements
+Last activity: 2026-07-07 — Milestone v5.0 started
 
 ## Session
 
-**Last session:** 2026-07-02T03:19:40.778Z
-**Stopped at:** Phase 5 context gathered
-**Resume file:** .planning/phases/05-cms-admin-tables-forms/05-CONTEXT.md
+**Last session:** 2026-07-07T02:21:33Z
+**Stopped at:** —
+**Resume file:** —
 
 ## Operator Next Steps
 
-- Start the next milestone with /gsd-new-milestone
+- Start the next phase with /gsd-discuss-phase 6
