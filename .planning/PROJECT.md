@@ -7,15 +7,15 @@ A full-stack, real-time television display dashboard system for the Indonesian M
 Continuous, reliable, and highly legible information broadcast on TV displays across different physical locations, manageable directly via a secure CMS admin panel (Single Source of Truth).
 
 ## Current State
-- **Active Version**: v5.0 (Cuti Archiving) - Planning
-- **Summary**: Milestone v4.0 is complete and shipped. v5.0 is focused on archiving employee leave (cuti) records instead of hard-deleting them.
+- **Active Version**: v5.0 (Cuti Archiving) - Phase 6 Complete
+- **Summary**: Milestone v4.0 is complete and shipped. v5.0 is focused on archiving employee leave (cuti) records instead of hard-deleting them. Phase 6 (Backend API & Database) is completed and verified.
 
 ## Current Milestone: v5.0 Cuti Archiving
 
 **Goal:** Menghindari penghapusan data cuti pegawai dengan mengarsipkannya sehingga data historis tetap tersimpan, dan menyediakan antarmuka pengarsipan di CMS Admin.
 
 **Target features:**
-- Modifikasi skema database `EmployeeLeave` untuk mendukung status pengarsipan (misalnya kolom `isArchived` boolean atau sejenisnya).
+- Modifikasi skema database `EmployeeLeave` untuk mendukung status pengarsipan (kolom `isArchived` boolean atau sejenisnya).
 - Perbarui API Backend (CRUD cuti) untuk mendukung fungsi pengarsipan (archive/unarchive) dan pemfilteran data cuti aktif vs diarsipkan.
 - Perbarui halaman "Kelola Cuti" di CMS Admin untuk mengganti aksi "Hapus" dengan "Arsipkan", serta menyediakan tab/filter untuk melihat riwayat "Cuti Diarsipkan".
 - Pastikan API display `/api/display/agenda` secara otomatis memfilter dan menyembunyikan cuti yang diarsipkan.
@@ -33,9 +33,17 @@ Continuous, reliable, and highly legible information broadcast on TV displays ac
 - **V-8**: Local Jakarta time date filtering to filter out passed employee leaves from display agenda.
 - ✓ **MOB-01**: Responsivitas Agenda Display (Opsi 2) — v4.0
 - ✓ **MOB-02**: Responsivitas CMS Admin Portal — v4.0
+- ✓ **LVARCH-01**: Skema database EmployeeLeave dengan status isArchived — Phase 6
+- ✓ **LVARCH-02**: Filter data cuti di display agenda public (sembunyikan data diarsipkan) — Phase 6
+- ✓ **LVARCH-03**: Filter data cuti di admin GET (active/archived/all) — Phase 6
+- ✓ **LVARCH-04**: Soft-delete data cuti pada DELETE endpoint — Phase 6
+- ✓ **LVARCH-05**: Endpoint restore/unarchive data cuti — Phase 6
 
 ### Active
-- None (Planning next milestone)
+- **LVARCH-06**: Penggantian aksi Hapus dengan Arsipkan di CMS Admin UI
+- **LVARCH-07**: Tombol filter/tab "Aktif" vs "Diarsipkan" di CMS Admin UI
+- **LVARCH-08**: Aksi Restore untuk data cuti yang diarsipkan di CMS Admin UI
+- **LVARCH-09**: Validasi integrasi end-to-end pengarsipan cuti di UI
 
 ### Out of Scope
 - Google Slides scraping and synchronization (Deprecated).
@@ -73,4 +81,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-07-07 after starting Milestone v5.0*
+*Last updated: 2026-07-07 after completing Phase 6*
