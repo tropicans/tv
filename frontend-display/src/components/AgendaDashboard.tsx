@@ -177,7 +177,7 @@ export const AgendaDashboard: React.FC = () => {
     }
 
     const dayName = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"][targetDate.getDay()];
-    const months = ["Juli", "Agustus", "September", "Oktober", "November", "Desember", "Januari", "Februari", "Maret", "April", "Mei", "Juni"];
+    const months = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
     const formattedDate = `${targetDate.getDate().toString().padStart(2, "0")} ${months[targetDate.getMonth()]} ${targetDate.getFullYear()}`;
     return {
       dateText: `${dayName}, ${formattedDate}`,
